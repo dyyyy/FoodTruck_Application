@@ -20,7 +20,7 @@ public class EventActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeButtonEnabled(true);
 
-        String[] items = {"이벤트1", "이벤트2", "이벤트3"};
+        String[] items = {"이벤트1", "이벤트23", "이벤트3"};
         ListAdapter listAdapter = new ImageAdapter(this, items);
         ListView listView = findViewById(R.id.eventListview);
         listView.setAdapter(listAdapter);
