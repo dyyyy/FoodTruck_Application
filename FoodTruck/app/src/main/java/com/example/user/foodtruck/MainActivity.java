@@ -1,12 +1,12 @@
 package com.example.user.foodtruck;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -14,22 +14,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.GridLayout;
 import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -107,7 +94,6 @@ public class MainActivity extends AppCompatActivity
                 "4. Grav\n" +
                 "이 라이브러리는 포인트를 기반으로 여러 애니메이션을 만들 수 있습니다. 멋진 애니메이션을 아주 쉽게 만들 수 있습니다. README 에는 많은 예제가 있으므로 여기에서 확인 하십시오 .");
 
-
     }
 
     /*onBackPressed Toast Message*/
@@ -169,30 +155,46 @@ public class MainActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
+        if (isNetworkAvailable()) {
+            // Handle navigation view item clicks here.
+            int id = item.getItemId();
 
-        Intent intent;
-        if (id == R.id.nav_first_layout) {
-            intent = new Intent(this, NoticeActivity.class);
-            startActivity(intent);
-        } else if (id == R.id.nav_second_layout) {
-            intent = new Intent(this, EventActivity.class);
-            startActivity(intent);
-        } else if (id == R.id.nav_slideshow) {
+            Intent intent;
+            if (id == R.id.nav_first_layout) {
+                intent = new Intent(this, NoticeActivity.class);
+                startActivity(intent);
+            } else if (id == R.id.nav_second_layout) {
+                intent = new Intent(this, EventActivity.class);
+                startActivity(intent);
+            } else if (id == R.id.nav_slideshow) {
 
-        } else if (id == R.id.nav_manage) {
+            } else if (id == R.id.nav_manage) {
 
-        } else if (id == R.id.nav_share) {
+            } else if (id == R.id.nav_share) {
 
-        } else if (id == R.id.nav_send) {
+            } else if (id == R.id.nav_send) {
 
+            }
+
+            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+            drawer.closeDrawer(GravityCompat.START);
+            return true;
+        } else {
+            Toast.makeText(getApplicationContext(), "Network is not Available", Toast.LENGTH_SHORT).show();
+            return false;
         }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
     }
 
+    private boolean isNetworkAvailable() {
+        boolean available = false;
 
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        if (networkInfo != null && networkInfo.isAvailable()) {
+            available = true;
+        }
+
+        return available;
+    }
 }
