@@ -61,6 +61,9 @@ public class NoticeActivity extends AppCompatActivity {
                     Intent intent;
                     if (item != null) {
                         intent = new Intent(NoticeActivity.this, NoticeDetailActivity.class);
+                        intent.putExtra("title", item.getNoticeTitle());
+                        intent.putExtra("reg", item.getNoticeReg());
+                        intent.putExtra("content", item.getNoticeContent());
 
                         startActivity(intent);
                     } else {
