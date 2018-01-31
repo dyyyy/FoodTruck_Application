@@ -22,22 +22,30 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".NoticeActivity">
+        <activity android:name=".NoticeActivity" android:label="@string/nav_notice">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
-
-        <activity android:name=".EventActivity">
+        <activity android:name=".EventActivity" android:label="@string/nav_event">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
-        <activity android:name=".NoticeDetailActivity">
+        <activity android:name=".BoardDetailActivity" android:label="@string/nav_board_detail">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".NoticeActivity" />
-
+        </activity>
+        <activity android:name=".ServiceCenterActivity" android:label="@string/nav_sc">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+        <activity android:name=".SettingsActivity" android:label="@string/action_settings">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
         </activity>
     </application>
 

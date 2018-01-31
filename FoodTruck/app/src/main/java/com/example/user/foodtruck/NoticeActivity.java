@@ -30,60 +30,66 @@ public class NoticeActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeButtonEnabled(true);
 
-        String addr = "notice";
 
-        try {
+        NetworkAvailable networkAvailable = new NetworkAvailable();
 
-            HttpReceiveAsyncTask httpReceiveAsyncTask = new HttpReceiveAsyncTask();
-            String result = httpReceiveAsyncTask.execute("" + addr + "").get();
-            System.out.println("result: " + result);
-            JsonParser parser = new JsonParser();
-            JsonObject jsonObject = new JsonObject();
-            jsonObject = (JsonObject) parser.parse(result);
-            JsonArray jsonArray = new JsonArray();
-            Gson gson = new Gson();
+        if (networkAvailable.isNetworkAvailable(this)) {
+            String addr = "notice";
+            try {
+
+                HttpReceiveAsyncTask httpReceiveAsyncTask = new HttpReceiveAsyncTask();
+                String result = httpReceiveAsyncTask.execute("" + addr + "").get();
+                System.out.println("result: " + result);
+                JsonParser parser = new JsonParser();
+                JsonObject jsonObject = new JsonObject();
+                jsonObject = (JsonObject) parser.parse(result);
+                JsonArray jsonArray = new JsonArray();
+                Gson gson = new Gson();
 
 
-            jsonArray = jsonObject.get("notice").getAsJsonArray();
-            ArrayList<NoticeVO> nvolist = gson.fromJson(jsonArray.toString(), new TypeToken<ArrayList<NoticeVO>>() {
-            }.getType());
+                jsonArray = jsonObject.get("data").getAsJsonArray();
+                ArrayList<BoardVO> bvolist = gson.fromJson(jsonArray.toString(), new TypeToken<ArrayList<BoardVO>>() {
+                }.getType());
 
-            ListAdapter listAdapter = new ImageAdapter(this, nvolist);
-            ListView listView = findViewById(R.id.noticeListview);
-            listView.setAdapter(listAdapter);
+                ListAdapter listAdapter = new BoardAdapter(this, bvolist);
+                ListView listView = findViewById(R.id.noticeListview);
+                listView.setAdapter(listAdapter);
 
-            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
                 /*공지사항을 볼수있는 페이지로 넘겨주기*/
-                    NoticeVO item = (NoticeVO) adapterView.getItemAtPosition(i);
-                    Intent intent;
-                    if (item != null) {
-                        intent = new Intent(NoticeActivity.this, NoticeDetailActivity.class);
-                        intent.putExtra("title", item.getNoticeTitle());
-                        intent.putExtra("reg", item.getNoticeReg());
-                        intent.putExtra("content", item.getNoticeContent());
+                        BoardVO item = (BoardVO) adapterView.getItemAtPosition(i);
+                        Intent intent;
+                            if (item != null) {
+                                intent = new Intent(NoticeActivity.this, BoardDetailActivity.class);
+                                intent.putExtra("title", item.getBoardTitle());
+                                intent.putExtra("reg", item.getBoardReg());
+                                intent.putExtra("content", item.getBoardContent());
 
-                        startActivity(intent);
-                    } else {
-                        Toast.makeText(getApplicationContext(), "게시물이 없습니다.", Toast.LENGTH_SHORT).show();
+                                startActivity(intent);
+                        } else {
+                            Toast.makeText(getApplicationContext(), "게시물이 없습니다.", Toast.LENGTH_SHORT).show();
 
+                        }
                     }
-                }
-            });
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
+                });
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
+
+        } else {
+            Toast.makeText(this, "network is not available", Toast.LENGTH_SHORT).show();
         }
-
-
     }
 
     @Override
     public void onBackPressed() {
         finish();
     }
+
 
 }

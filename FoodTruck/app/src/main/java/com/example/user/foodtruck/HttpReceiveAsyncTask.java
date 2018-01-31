@@ -1,13 +1,8 @@
 package com.example.user.foodtruck;
 
+import android.app.Activity;
 import android.os.AsyncTask;
-import android.util.Log;
-import android.widget.ListView;
-
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -15,19 +10,10 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 
 public class HttpReceiveAsyncTask extends AsyncTask<String, Integer, String> {
     String inputUrl;
-
-    @Override
-    protected void onPreExecute() {
-
-        super.onPreExecute();
-    }
 
     @Override
     protected String doInBackground(String[] inputUrl) {
@@ -75,8 +61,11 @@ public class HttpReceiveAsyncTask extends AsyncTask<String, Integer, String> {
             int responseCode = urlConnection.getResponseCode();
             if (responseCode == HttpURLConnection.HTTP_OK) {
                 br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(), "utf-8"));
-            } else {
+            }
+            else {
+
                 br = new BufferedReader(new InputStreamReader(urlConnection.getErrorStream(), "utf-8"));
+
             }
 
             String inputLine;
@@ -101,7 +90,7 @@ public class HttpReceiveAsyncTask extends AsyncTask<String, Integer, String> {
             urlConnection.disconnect();
         }
         /*결과값 return 하면 post 메소드에서 처리한다..*/
-        System.out.println("result: "+result);
+        System.out.println("result: " + result);
         return result;
     }
 
@@ -112,7 +101,9 @@ public class HttpReceiveAsyncTask extends AsyncTask<String, Integer, String> {
 
     @Override
     protected void onPostExecute(String s) {
-        System.out.println("s : "+s);
+        System.out.println("s : " + s);
         super.onPostExecute(s);
     }
+
+
 }

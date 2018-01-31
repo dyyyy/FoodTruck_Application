@@ -1,5 +1,23 @@
 <resources>
-    <string name="app_name">FoodTruck</string>
+    <string name="app_name">푸드트럭</string>
+
+    <string name="nav_notice">공지사항</string>
+    <string name="nav_event">이벤트</string>
+    <string name="nav_board_detail">게시글</string>
+    <string name="nav_sc">고객센터</string>
+    <string name="nav_settings">환경설정</string>
+
+    <string-array name="menu_list">
+        <item>한식</item>
+        <item>중식</item>
+        <item>일식</item>
+        <item>양식</item>
+        <item>야식</item>
+        <item>야식</item>
+        <item>야식</item>
+        <item>야식</item>
+        <item>야식</item>
+    </string-array>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
