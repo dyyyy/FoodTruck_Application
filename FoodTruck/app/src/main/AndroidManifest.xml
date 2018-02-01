@@ -22,30 +22,49 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".NoticeActivity" android:label="@string/nav_notice">
+        <activity
+            android:name=".NoticeActivity"
+            android:label="@string/nav_notice">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
-        <activity android:name=".EventActivity" android:label="@string/nav_event">
+        <activity
+            android:name=".EventActivity"
+            android:label="@string/nav_event">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
-        <activity android:name=".BoardDetailActivity" android:label="@string/nav_board_detail">
+        <activity
+            android:name=".BoardDetailActivity"
+            android:label="@string/nav_board_detail">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".NoticeActivity" />
         </activity>
-        <activity android:name=".ServiceCenterActivity" android:label="@string/nav_sc">
+        <activity
+            android:name=".ServiceCenterActivity"
+            android:label="@string/nav_sc">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
-        <activity android:name=".SettingsActivity" android:label="@string/action_settings">
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/action_settings">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
+        </activity>
+        <activity
+            android:name=".MenuActivity"
+            android:label="@string/title_activity_menu"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.user.foodtruck.MainActivity" />
         </activity>
     </application>
 

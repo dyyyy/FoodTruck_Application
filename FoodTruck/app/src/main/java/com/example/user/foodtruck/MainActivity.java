@@ -20,10 +20,12 @@ import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, AdapterView.OnItemClickListener {
     private BackPressCloseHandler backPressCloseHandler;
-    GridView gridView;
+
+    Intent intent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,28 +44,27 @@ public class MainActivity extends AppCompatActivity
 
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-
         navigationView.setNavigationItemSelectedListener(this);
 
-        int[] images={R.drawable. ic_menu_slideshow, R.drawable.ic_menu_manage, R.drawable.ic_menu_send, R.drawable.ic_menu_camera, R.drawable.ic_menu_camera, R.drawable.ic_menu_camera, R.drawable.ic_menu_send, R.drawable.ic_menu_camera, R.drawable.ic_menu_share };
-        String [] values ={"1","1","1","1","1","1","1","1","1"};
-        gridView = findViewById(R.id.gridview);
+        int[] images = {R.drawable.ic_menu_slideshow, R.drawable.ic_menu_manage, R.drawable.ic_menu_send, R.drawable.ic_menu_camera, R.drawable.ic_menu_camera, R.drawable.ic_menu_camera, R.drawable.ic_menu_send, R.drawable.ic_menu_camera, R.drawable.ic_menu_share};
+        String[] values = {"한식", "분식", "돈까스.회.일식", "치킨", "피자", "중국집", "족발.보쌈", "야식", "찜.탕"};
+        ExpandableHeightGridView gridView = findViewById(R.id.gridView);
+        gridView.setExpanded(true);
         MenuAdapter menuAdapter = new MenuAdapter(this, images, values);
 
         gridView.setAdapter(menuAdapter);
         gridView.setOnItemClickListener(this);
 
 
-
-            TextView textView = findViewById(R.id.contentmain);
-            textView.setText("본문");
-
-
     }
-/*menu Adapter*/
+
+    /*menu Adapter*/
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Toast.makeText(this, "menu Click"+position, Toast.LENGTH_SHORT).show();
+
+        intent = new Intent(this, MenuActivity.class);
+        intent.putExtra("position", position);
+        startActivity(intent);
     }
 
     /*onBackPressed Toast Message*/
@@ -129,7 +130,7 @@ public class MainActivity extends AppCompatActivity
 
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        Intent intent;
+
 
 
         if (id == R.id.nav_notice) {
@@ -151,10 +152,9 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
 
 
+
         return true;
-
     }
-
 
 
 }
