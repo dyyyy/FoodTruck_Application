@@ -15,7 +15,26 @@
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginRight="8dp">
+
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="구매자" />
+
+            <RadioButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="판매자" />
+        </RadioGroup>
 
         <TableLayout
             android:layout_width="match_parent"
@@ -76,15 +95,10 @@
             </TableRow>
         </TableLayout>
 
-        <RadioButton
+        <CheckBox
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="RadioButton" />
-
-        <RadioButton
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="RadioButton" />
+            android:text="이용약관에 동의 합니다." />
 
         <Button
             android:id="@+id/registerBtn"
