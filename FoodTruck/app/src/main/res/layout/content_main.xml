@@ -38,7 +38,14 @@
                 android:numColumns="3"
                 >
 
+
             </com.example.user.foodtruck.ExpandableHeightGridView>
+
+            <Button
+                android:id="@+id/loginBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="로그인" />
         </LinearLayout>
 
 

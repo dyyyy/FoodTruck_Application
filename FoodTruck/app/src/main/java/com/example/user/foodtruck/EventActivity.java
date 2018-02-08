@@ -1,22 +1,24 @@
 package com.example.user.foodtruck;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.google.gson.reflect.TypeToken;
+import com.example.user.adapter.EventAdapter;
+import com.example.user.networkutil.HttpAsyncTask;
+import com.example.user.networkutil.NetworkAvailable;
+import com.example.user.vo.EventVO;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
-import java.util.ArrayList;
+import java.io.IOException;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class EventActivity extends AppCompatActivity {
@@ -26,9 +28,9 @@ public class EventActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event);
         ActionBar actionBar = getSupportActionBar();
-
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeButtonEnabled(true);
+
 
         NetworkAvailable networkAvailable = new NetworkAvailable();
 
@@ -36,44 +38,44 @@ public class EventActivity extends AppCompatActivity {
             String addr = "event";
             try {
 
-                HttpReceiveAsyncTask httpReceiveAsyncTask = new HttpReceiveAsyncTask();
-                String result = httpReceiveAsyncTask.execute("" + addr + "").get();
+                HttpAsyncTask httpAsyncTask = new HttpAsyncTask(addr);
+                String result = httpAsyncTask.execute().get();
                 System.out.println("result: " + result);
-                JsonParser parser = new JsonParser();
-                JsonObject jsonObject = new JsonObject();
-                jsonObject = (JsonObject) parser.parse(result);
-                JsonArray jsonArray = new JsonArray();
-                Gson gson = new Gson();
+
+                ObjectMapper objectMapper = new ObjectMapper();
+
+                try {
+                    List<EventVO> list = objectMapper.readValue(result, new TypeReference<List<EventVO>>() {
+                    });
+                    ListAdapter listAdapter = new EventAdapter(this, list);
+                    ListView listView = findViewById(R.id.eventListview);
+                    listView.setAdapter(listAdapter);
+                    /*이벤트 리스너*/
+                    listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                            EventVO item = (EventVO) adapterView.getItemAtPosition(i);
+                            Intent intent;
+                            if (item != null) {
 
 
-                jsonArray = jsonObject.get("data").getAsJsonArray();
-                ArrayList<BoardVO> bvolist = gson.fromJson(jsonArray.toString(), new TypeToken<ArrayList<BoardVO>>() {
-                }.getType());
+                                intent = new Intent(EventActivity.this, EventDetailActivity.class);
+                                intent.putExtra("object", item);
+                                startActivity(intent);
 
-                ListAdapter listAdapter = new BoardAdapter(this, bvolist);
-                ListView listView = findViewById(R.id.eventListview);
-                listView.setAdapter(listAdapter);
-
-                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-                /*공지사항을 볼수있는 페이지로 넘겨주기*/
-                        BoardVO item = (BoardVO) adapterView.getItemAtPosition(i);
-                        Intent intent;
-                        if (item != null) {
-                            intent = new Intent(EventActivity.this, BoardDetailActivity.class);
-                            intent.putExtra("title", item.getBoardTitle());
-                            intent.putExtra("reg", item.getBoardReg());
-                            intent.putExtra("content", item.getBoardContent());
-
-                            startActivity(intent);
-                        } else {
-                            Toast.makeText(getApplicationContext(), "게시물이 없습니다.", Toast.LENGTH_SHORT).show();
-
+                            } else {
+                                Toast.makeText(getApplicationContext(), "게시물이 없습니다.", Toast.LENGTH_SHORT).show();
+                            }
                         }
-                    }
-                });
+                    });
+
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+
             } catch (InterruptedException e) {
                 e.printStackTrace();
             } catch (ExecutionException e) {

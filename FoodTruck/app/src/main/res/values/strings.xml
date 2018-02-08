@@ -19,6 +19,35 @@
         <item>야식</item>
     </string-array>
 
+    <string-array name="scspinner1_arr">
+        <item>고객정보</item>
+        <item>주문/결제</item>
+        <item>배송/예약</item>
+        <item>취소</item>
+        <item>이벤트/기타</item>
+    </string-array>
+    <string-array name="scspinner2_arr1">
+        <item>가입/탈퇴</item>
+        <item>정보확인/수정</item>
+    </string-array>
+    <string-array name="scspinner2_arr2">
+        <item>주문/거래확인</item>
+        <item>영수증</item>
+        <item>카드결재</item>
+        <item>무통장 입금</item>
+    </string-array>
+    <string-array name="scspinner2_arr3">
+        <item>배달진행상태</item>
+        <item>배달지연/누락</item>
+    </string-array>
+    <string-array name="scspinner2_arr4">
+        <item>취소 환불정보</item>
+        <item>취소 신청/철회</item>
+    </string-array>
+    <string-array name="scspinner2_arr5">
+        <item>이벤트 문의</item>
+        <item>기타</item>
+    </string-array>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 

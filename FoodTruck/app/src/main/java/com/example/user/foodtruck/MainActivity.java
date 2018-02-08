@@ -1,10 +1,7 @@
 package com.example.user.foodtruck;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -16,16 +13,18 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.GridView;
-import android.widget.TextView;
+import android.widget.Button;
 import android.widget.Toast;
+
+import com.example.user.adapter.MenuAdapter;
 
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, AdapterView.OnItemClickListener {
+        implements NavigationView.OnNavigationItemSelectedListener, AdapterView.OnItemClickListener, View.OnClickListener {
     private BackPressCloseHandler backPressCloseHandler;
 
     Intent intent;
+/*쉐어프리퍼런스로 로그인 기능 권한주기*/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,9 +41,18 @@ public class MainActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
+        //Button loginBtn = findViewById(R.id.nav_loginBtn);
+        Button loginButton = findViewById(R.id.loginBtn);
+        loginButton.setOnClickListener(this);
 
+
+        /*네비게이션 메뉴 바디*/
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+
+
+
 
         int[] images = {R.drawable.ic_menu_slideshow, R.drawable.ic_menu_manage, R.drawable.ic_menu_send, R.drawable.ic_menu_camera, R.drawable.ic_menu_camera, R.drawable.ic_menu_camera, R.drawable.ic_menu_send, R.drawable.ic_menu_camera, R.drawable.ic_menu_share};
         String[] values = {"한식", "분식", "돈까스.회.일식", "치킨", "피자", "중국집", "족발.보쌈", "야식", "찜.탕"};
@@ -56,6 +64,7 @@ public class MainActivity extends AppCompatActivity
         gridView.setOnItemClickListener(this);
 
 
+
     }
 
     /*menu Adapter*/
@@ -64,6 +73,12 @@ public class MainActivity extends AppCompatActivity
 
         intent = new Intent(this, MenuActivity.class);
         intent.putExtra("position", position);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onClick(View v) {
+        intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
     }
 
@@ -132,25 +147,29 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
 
-
-        if (id == R.id.nav_notice) {
-
-            intent = new Intent(this, NoticeActivity.class);
-            startActivity(intent);
-        } else if (id == R.id.nav_event) {
-            intent = new Intent(this, EventActivity.class);
-            startActivity(intent);
-        } else if (id == R.id.nav_service_center) {
-            intent = new Intent(this, ServiceCenterActivity.class);
-            startActivity(intent);
-        } else if (id == R.id.nav_settings) {
-            intent = new Intent(this, SettingsActivity.class);
-            startActivity(intent);
+        switch(id){
+            case R.id.nav_notice:
+                intent = new Intent(this, NoticeActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.nav_event:
+                intent = new Intent(this, EventActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.nav_service_center:
+                intent = new Intent(this, ServiceCenterActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.nav_settings:
+                intent = new Intent(this, SettingsActivity.class);
+                startActivity(intent);
+                break;
+            default:
+                Toast.makeText(getApplicationContext(), "message"+id, Toast.LENGTH_SHORT).show();
+                break;
         }
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
-
 
 
         return true;

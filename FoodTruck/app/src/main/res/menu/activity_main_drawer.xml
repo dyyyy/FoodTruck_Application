@@ -6,35 +6,22 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_notice"
-            android:icon="@mipmap/notice_icon"
             android:title="공지사항" />
         <item
             android:id="@+id/nav_event"
-            android:icon="@mipmap/event"
             android:title="이벤트" />
         <item
             android:id="@+id/nav_service_center"
-            android:icon="@android:drawable/stat_sys_headset"
             android:title="고객센터" />
         <item
             android:id="@+id/nav_settings"
-            android:icon="@android:drawable/ic_menu_preferences"
             android:title="환경설정" />
     </group>
-
-    <item android:title="Communicate">
+    <item android:title="">
         <menu>
-            <item
-                android:id="@+id/nav_share"
-                android:layout_height="match_parent"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
-            <item
-                android:id="@+id/nav_send"
-                android:layout_height="match_parent"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
-        </menu>
-    </item>
+            <item android:title="콜센터"></item>
 
+        </menu>
+
+    </item>
 </menu>

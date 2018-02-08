@@ -1,4 +1,4 @@
-package com.example.user.foodtruck;
+package com.example.user.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.user.foodtruck.R;
 
 /**
  * Created by bit-user on 2018-01-31.

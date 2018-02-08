@@ -1,4 +1,4 @@
-package com.example.user.foodtruck;
+package com.example.user.networkutil;
 
 import android.app.Activity;
 import android.content.Context;
