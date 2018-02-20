@@ -45,8 +45,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         switch (v.getId()) {
             case R.id.loginBtn:
                 /*로그인 할때 id와 패스워드를 유효성 확인 후*/
-                EditText idText = findViewById(R.id.idInput);
-                EditText pwText = findViewById(R.id.pwInput);
+                EditText idText = findViewById(R.id.loginidText);
+                EditText pwText = findViewById(R.id.loginpwText);
 
                 if (idText.getText().toString().length() <= 3) {
                     Toast.makeText(LoginActivity.this, "아이디를 입력하세요", Toast.LENGTH_SHORT).show();
