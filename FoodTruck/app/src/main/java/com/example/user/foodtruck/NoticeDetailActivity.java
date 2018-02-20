@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
 import com.example.user.networkutil.HttpAsyncTask;
-import com.example.user.networkutil.RestTempleatAsyncTask;
 import com.example.user.vo.NoticeVO;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -38,10 +37,21 @@ public class NoticeDetailActivity extends AppCompatActivity {
         regView.setText(vo.getNoticeReg());
         contentView.setText(vo.getNoticeContent());
 
-        String uri = "/noticecount";
-        RestTempleatAsyncTask restTempleatAsyncTask = new RestTempleatAsyncTask(uri, vo);
-        restTempleatAsyncTask.execute();
+        String addr = "noticecount";
+        JSONObject jsonObject = new JSONObject();
 
+        try {
+            jsonObject.put("no", vo.getNoticeNo());
+            HttpAsyncTask httpAsyncTask = new HttpAsyncTask(addr, jsonObject.toString());
+            String result = httpAsyncTask.execute().get();
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

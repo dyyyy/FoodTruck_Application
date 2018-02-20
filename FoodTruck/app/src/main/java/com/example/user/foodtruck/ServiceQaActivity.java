@@ -13,7 +13,6 @@ import android.widget.Toast;
 
 import com.example.user.networkutil.HttpAsyncTask;
 import com.example.user.networkutil.NetworkAvailable;
-import com.example.user.networkutil.RestTempleatAsyncTask;
 import com.example.user.vo.MInquiryVO;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -61,10 +60,10 @@ public class ServiceQaActivity extends AppCompatActivity implements AdapterView.
         });
 
         /*submitButton*/
-        NetworkAvailable networkAvailable = new NetworkAvailable(this);
+        NetworkAvailable networkAvailable = new NetworkAvailable();
         Button submitButton = findViewById(R.id.qa_submit_btn);
 
-        if (networkAvailable.isNetworkAvailable()) {
+        if (networkAvailable.isNetworkAvailable(this)) {
             submitButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -94,10 +93,21 @@ public class ServiceQaActivity extends AppCompatActivity implements AdapterView.
                     mInquiryVO.setQaScCategory2(spinner2.getSelectedItem().toString());
                     mInquiryVO.setQaScTel(teltextView.getText().toString());
 
-                    String uri = "/user/memberinquiry";
-                    RestTempleatAsyncTask restTempleatAsyncTask = new RestTempleatAsyncTask(uri, mInquiryVO);
-                    restTempleatAsyncTask.execute();
-                    
+                    try {
+                        String jsonString = new ObjectMapper().writeValueAsString(mInquiryVO);
+
+                        String addr = "androidmemberinquiry";
+
+                        try {
+                            HttpAsyncTask httpAsyncTask = new HttpAsyncTask(addr, jsonString);
+                            httpAsyncTask.execute();
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    } catch (JsonProcessingException e) {
+                        e.printStackTrace();
+                    }
                     finish();
                     /*문의하기 한 후 화면 종료한 후에 성공했다는 메시지 뿌려주기*/
 
@@ -105,7 +115,6 @@ public class ServiceQaActivity extends AppCompatActivity implements AdapterView.
             });
         } else {
             Toast.makeText(this, "network is not available", Toast.LENGTH_SHORT).show();
-            finish();
         }
 
     }

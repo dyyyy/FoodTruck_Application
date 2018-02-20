@@ -12,18 +12,17 @@ import android.net.NetworkInfo;
 public class NetworkAvailable {
     private Activity activity;
 
-
-    public NetworkAvailable(Activity activity) {
-        this.activity = activity;
-    }
-
-    public boolean isNetworkAvailable() {
-
+    public boolean isNetworkAvailable(Activity context) {
+        boolean available = false;
+        this.activity = context;
         ConnectivityManager connectivityManager = (ConnectivityManager) activity.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo mobile = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE); //모바일 데이터 여부
-        NetworkInfo wifi = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI); //와이파이 여부
 
-        return mobile.isConnected() || wifi.isConnected(); //결과값을 리턴
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        if (networkInfo != null && networkInfo.isAvailable()) {
+            available = true;
+        }
+
+        return available;
     }
 
 }

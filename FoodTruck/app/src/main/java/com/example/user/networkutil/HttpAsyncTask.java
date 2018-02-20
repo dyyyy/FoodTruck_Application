@@ -2,7 +2,6 @@ package com.example.user.networkutil;
 
 import android.app.Activity;
 import android.os.AsyncTask;
-import android.util.Log;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
@@ -53,21 +52,15 @@ public class HttpAsyncTask extends AsyncTask<String, Integer, String> {
             urlConnection.setDoOutput(true);
             urlConnection.setDoInput(true);
             urlConnection.connect();
-            //urlConnection.setRequestProperty("request", "세션값");
+
             /*보낼 값이 있을때*/
-            if (jsonString != null) {
+            if(jsonString != null){
                 outputStream = urlConnection.getOutputStream();
                 outputStream.write(jsonString.getBytes());
                 outputStream.flush();
             }
 
             int responseCode = urlConnection.getResponseCode();
-
-            String session = urlConnection.getHeaderField("response");
-            Log.d("session1 value : ", "" + session);
-            session = urlConnection.getRequestProperty("response");
-            Log.d("session2 value : ", "" + session);
-
             if (responseCode == HttpURLConnection.HTTP_OK) {
                 br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(), "utf-8"));
             } else {

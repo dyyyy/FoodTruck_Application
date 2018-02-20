@@ -1,12 +1,9 @@
 package com.example.user.foodtruck;
 
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListAdapter;
@@ -16,24 +13,14 @@ import android.widget.Toast;
 import com.example.user.adapter.NoticeAdapter;
 import com.example.user.networkutil.HttpAsyncTask;
 import com.example.user.networkutil.NetworkAvailable;
-import com.example.user.networkutil.RestTempleatAsyncTask;
 import com.example.user.vo.NoticeVO;
 import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.JsonArray;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 public class NoticeActivity extends AppCompatActivity {
@@ -48,17 +35,16 @@ public class NoticeActivity extends AppCompatActivity {
         actionBar.setHomeButtonEnabled(true);
 
 
-        NetworkAvailable networkAvailable = new NetworkAvailable(this);
+        NetworkAvailable networkAvailable = new NetworkAvailable();
         List<NoticeVO> list;
-        if (networkAvailable.isNetworkAvailable()) {
-            String uri = "/notice";
+        if (networkAvailable.isNetworkAvailable(this)) {
+            String addr = "notice";
             try {
 
-                RestTempleatAsyncTask restTempleatAsyncTask = new RestTempleatAsyncTask(uri);
-                String result = restTempleatAsyncTask.execute().get();
+                HttpAsyncTask httpAsyncTask = new HttpAsyncTask(addr);
+                String result = httpAsyncTask.execute().get();
 
-                list = new ObjectMapper().readValue(result, new TypeReference<List<NoticeVO>>() {
-                });
+                list = new ObjectMapper().readValue(result, new TypeReference<List<NoticeVO>>() {});
 
                 ListAdapter listAdapter = new NoticeAdapter(this, list);
                 ListView listView = findViewById(R.id.noticeListview);
@@ -68,12 +54,11 @@ public class NoticeActivity extends AppCompatActivity {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-                        NoticeVO vo = (NoticeVO) adapterView.getItemAtPosition(i);
-
+                        NoticeVO item = (NoticeVO) adapterView.getItemAtPosition(i);
                         Intent intent;
-                        if (vo != null) {
+                        if (item != null) {
                             intent = new Intent(NoticeActivity.this, NoticeDetailActivity.class);
-                            intent.putExtra("object", vo);
+                            intent.putExtra("object", item);
                             startActivity(intent);
 
                         } else {
@@ -97,7 +82,6 @@ public class NoticeActivity extends AppCompatActivity {
 
         } else {
             Toast.makeText(this, "network is not available", Toast.LENGTH_SHORT).show();
-            finish();
         }
     }
 
@@ -105,5 +89,6 @@ public class NoticeActivity extends AppCompatActivity {
     public void onBackPressed() {
         finish();
     }
+
 
 }

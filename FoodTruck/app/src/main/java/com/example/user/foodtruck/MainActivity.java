@@ -2,10 +2,10 @@ package com.example.user.foodtruck;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -23,11 +23,8 @@ import com.example.user.adapter.MenuAdapter;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, AdapterView.OnItemClickListener, View.OnClickListener {
     private BackPressCloseHandler backPressCloseHandler;
-
     Intent intent;
-
-    /*쉐어프리퍼런스로 로그인 기능*/
-    /*앱이 종료되면 autoLogin이 아닐때 sharedpreference (로그인)정보 삭제*/
+/*쉐어프리퍼런스로 로그인 기능 권한주기*/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,35 +41,29 @@ public class MainActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
+        //Button loginBtn = findViewById(R.id.nav_loginBtn);
+        Button loginButton = findViewById(R.id.loginBtn);
+        loginButton.setOnClickListener(this);
+
 
         /*네비게이션 메뉴 바디*/
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        View header = navigationView.getHeaderView(0);
-
-        /*로그인정보가 있는지 없는지 확인 후 로그인버튼을 보여줄지 사용자 정보를 보여줄지 결정*/
-        SharedPreferences sharedPreferences = getSharedPreferences("login", MODE_PRIVATE);
-
-        System.out.println("shared : "+sharedPreferences);
-        System.out.println("getBoolean : "+sharedPreferences.getBoolean("autoLogin", false));
-        /*
-        if(sharedPreferences.getBoolean("autoLogin", false)){
-
-        }*/
-
-        Button loginBtn = header.findViewById(R.id.nav_loginBtn);
-        loginBtn.setOnClickListener(this);
 
 
 
-        int[] images = {R.drawable.ic_menu_slideshow, R.drawable.ic_menu_manage, R.drawable.ic_menu_send, R.drawable.ic_menu_camera, R.drawable.ic_menu_camera, R.drawable.ic_menu_camera, R.drawable.ic_menu_send, R.drawable.ic_menu_camera, R.drawable.ic_menu_share};
-        String[] values = {"한식", "분식", "돈까스.회.일식", "치킨", "피자", "중국집", "족발.보쌈", "야식", "찜.탕"};
+
+
+
+        int[] images = {R.drawable.korean, R.drawable.snack, R.drawable.japanese, R.drawable.chicken, R.drawable.pizza, R.drawable.chinese, R.drawable.pig, R.drawable.midnight, R.drawable.western};
+        String[] values = {"한식", "분식", "돈까스.회.일식", "치킨", "피자", "중식", "족발.보쌈", "야식", "양식"};
         ExpandableHeightGridView gridView = findViewById(R.id.gridView);
         gridView.setExpanded(true);
         MenuAdapter menuAdapter = new MenuAdapter(this, images, values);
 
         gridView.setAdapter(menuAdapter);
         gridView.setOnItemClickListener(this);
+
 
 
     }
@@ -88,19 +79,8 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onClick(View v) {
-
-        Toast.makeText(getApplicationContext(), "onClick : " + v.getId(), Toast.LENGTH_SHORT).show();
-
-        switch (v.getId()) {
-            case R.id.nav_loginBtn:
-                intent = new Intent(this, LoginActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.nav_image_switcher:
-
-                break;
-        }
-
+        intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
     }
 
     /*onBackPressed Toast Message*/
@@ -150,7 +130,7 @@ public class MainActivity extends AppCompatActivity
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        Toast.makeText(getApplicationContext(), "optionItemselected id : " + id, Toast.LENGTH_SHORT).show();
+
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
@@ -166,9 +146,9 @@ public class MainActivity extends AppCompatActivity
 
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        Toast.makeText(getApplicationContext(), "navigation id : " + id, Toast.LENGTH_SHORT).show();
 
-        switch (id) {
+
+        switch(id){
             case R.id.nav_notice:
                 intent = new Intent(this, NoticeActivity.class);
                 startActivity(intent);
@@ -186,7 +166,7 @@ public class MainActivity extends AppCompatActivity
                 startActivity(intent);
                 break;
             default:
-                Toast.makeText(getApplicationContext(), "message" + id, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "message"+id, Toast.LENGTH_SHORT).show();
                 break;
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -196,8 +176,5 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
+
 }

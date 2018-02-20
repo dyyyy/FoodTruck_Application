@@ -13,7 +13,6 @@ import android.widget.Toast;
 import com.example.user.adapter.EventAdapter;
 import com.example.user.networkutil.HttpAsyncTask;
 import com.example.user.networkutil.NetworkAvailable;
-import com.example.user.networkutil.RestTempleatAsyncTask;
 import com.example.user.vo.EventVO;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -33,15 +32,14 @@ public class EventActivity extends AppCompatActivity {
         actionBar.setHomeButtonEnabled(true);
 
 
-        NetworkAvailable networkAvailable = new NetworkAvailable(this);
+        NetworkAvailable networkAvailable = new NetworkAvailable();
 
-        if (networkAvailable.isNetworkAvailable()) {
-            String uri = "/event";
+        if (networkAvailable.isNetworkAvailable(this)) {
+            String addr = "event";
             try {
 
-                RestTempleatAsyncTask restTempleatAsyncTask = new RestTempleatAsyncTask(uri);
-                String result = restTempleatAsyncTask.execute().get();
-
+                HttpAsyncTask httpAsyncTask = new HttpAsyncTask(addr);
+                String result = httpAsyncTask.execute().get();
                 System.out.println("result: " + result);
 
                 ObjectMapper objectMapper = new ObjectMapper();
@@ -86,7 +84,6 @@ public class EventActivity extends AppCompatActivity {
 
         } else {
             Toast.makeText(this, "network is not available", Toast.LENGTH_SHORT).show();
-            finish();
         }
     }
 
