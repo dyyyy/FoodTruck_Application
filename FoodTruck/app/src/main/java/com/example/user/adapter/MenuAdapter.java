@@ -1,14 +1,10 @@
 package com.example.user.adapter;
 
 import android.content.Context;
-import android.os.Build;
-import android.support.annotation.RequiresApi;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -55,7 +51,7 @@ public class MenuAdapter extends BaseAdapter {
             ImageView imageView = view.findViewById(R.id.grid_item_image);
             TextView textView = view.findViewById(R.id.grid_item_text);
 
-            imageView.setBackgroundResource(images[position]);
+            imageView.setImageResource(images[position]);
             textView.setText(values[position]);
 
         }

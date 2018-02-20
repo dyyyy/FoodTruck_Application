@@ -5,7 +5,6 @@
     android:id="@+id/content_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.example.user.foodtruck.MainActivity"
     tools:layout_editor_absoluteY="73dp"
@@ -13,60 +12,40 @@
 
     <ScrollView
         android:id="@+id/scrollView2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="368dp"
+        android:layout_height="495dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+
+
             <SearchView
                 android:id="@+id/searchView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="match_parent" />
 
-            <ImageView
+            <com.example.user.foodtruck.ExpandableHeightGridView
+                android:id="@+id/gridView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/banner01"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#F6F6F6"
+                android:numColumns="3"
                 >
 
-                <com.example.user.foodtruck.ExpandableHeightGridView
-                    android:id="@+id/gridView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:horizontalSpacing="10dp"
-                    android:verticalSpacing="10dp"
-                    android:background="#FFFFFF"
-                    android:stretchMode="columnWidth"
-                    android:numColumns="3"
-                    >
 
-                </com.example.user.foodtruck.ExpandableHeightGridView>
-
-            </LinearLayout>
-
-            <Button
-                android:id="@+id/loginBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:background="@color/colorPrimary"
-                android:textColor="#FFFFFF"
-                android:text="로그인" />
+            </com.example.user.foodtruck.ExpandableHeightGridView>
 
         </LinearLayout>
 
+
+
     </ScrollView>
+
 
 </android.support.constraint.ConstraintLayout>

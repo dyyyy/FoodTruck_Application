@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
 import com.example.user.networkutil.HttpAsyncTask;
+import com.example.user.networkutil.RestTempleatAsyncTask;
 import com.example.user.vo.EventVO;
 
 import org.json.JSONException;
@@ -34,21 +35,10 @@ public class EventDetailActivity extends AppCompatActivity {
         regView.setText(vo.getEventReg());
         contentView.setText(vo.getEventContent());
 
-        String addr = "eventcount";
-        JSONObject jsonObject = new JSONObject();
+        String uri = "/eventcount";
 
-        try {
-            jsonObject.put("no", vo.getEventNo());
-            HttpAsyncTask httpAsyncTask = new HttpAsyncTask(addr, jsonObject.toString());
-            String result = httpAsyncTask.execute().get();
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
+        RestTempleatAsyncTask restTempleatAsyncTask = new RestTempleatAsyncTask(uri, vo);
+        restTempleatAsyncTask.execute();
 
     }
 

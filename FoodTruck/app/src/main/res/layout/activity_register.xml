@@ -7,21 +7,22 @@
     tools:context="com.example.user.foodtruck.RegisterActivity">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="10dp"
+        android:layout_width="344dp"
+        android:layout_height="495dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        >
+        android:layout_marginRight="8dp">
 
         <RadioGroup
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
             android:orientation="horizontal">
+
             <RadioButton
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -35,58 +36,75 @@
                 android:text="판매자" />
         </RadioGroup>
 
-        <EditText
-            android:id="@+id/idText"
+        <TableLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:background="@drawable/back"
-            android:ems="10"
-            android:hint="아이디"
-            android:inputType="textPersonName" />
+            android:layout_height="wrap_content">
 
-        <EditText
-            android:id="@+id/pwText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:ems="10"
-            android:hint="비밀번호"
-            android:background="@drawable/back"
-            android:inputType="textPersonName" />
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-        <EditText
-            android:id="@+id/nameText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:ems="10"
-            android:hint="이름"
-            android:background="@drawable/back"
-            android:inputType="textPersonName" />
+                <EditText
+                    android:id="@+id/idText"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:ems="10"
+                    android:hint="아이디"
+                    android:inputType="textEmailAddress" />
+            </TableRow>
 
-        <EditText
-            android:id="@+id/telText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:ems="10"
-            android:hint="연락처"
-            android:background="@drawable/back"
-            android:inputType="textPersonName" />
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <EditText
+                    android:id="@+id/pwText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="비밀번호"
+                    android:inputType="textPersonName|numberPassword" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <EditText
+                    android:id="@+id/nameText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:ems="10"
+                    android:hint="이름"
+                    android:inputType="textPersonName" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <EditText
+                    android:id="@+id/telText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="연락처"
+                    android:inputType="phone" />
+
+
+            </TableRow>
+        </TableLayout>
 
         <CheckBox
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
             android:text="이용약관에 동의 합니다." />
 
         <Button
             android:id="@+id/registerBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/back"
             android:text="회원가입" />
+
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

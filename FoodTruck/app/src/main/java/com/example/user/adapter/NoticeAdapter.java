@@ -37,15 +37,11 @@ public class NoticeAdapter extends ArrayAdapter<NoticeVO> {
         NoticeVO vo = list.get(position);
 
         TextView textView = view.findViewById(R.id.textView);
-        TextView textView1= view.findViewById(R.id.textView1);
-//        TextView memId= view.findViewById(R.id.memId);
-//        TextView noticeCnt= view.findViewById(R.id.noticeCnt);
-        ImageView imageView = view.findViewById(R.id.imageView); // 이미지
+        TextView textView1 = view.findViewById(R.id.textView1);
+        ImageView imageView = view.findViewById(R.id.imageView);
 
         textView.setText(vo.getNoticeTitle());
         textView1.setText(vo.getNoticeReg());
-//        memId.setText(vo.getMemId());
-//        noticeCnt.setText(vo.getNoticeCnt());
         imageView.setImageResource(R.mipmap.notice_icon);
 
         return view;

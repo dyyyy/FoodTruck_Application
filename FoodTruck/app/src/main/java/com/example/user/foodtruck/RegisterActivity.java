@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.user.networkutil.HttpAsyncTask;
+import com.example.user.networkutil.RestTempleatAsyncTask;
 import com.example.user.vo.MemberVO;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -67,7 +68,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             return;
         }
 
-        String addr = "androidregister";
+        String uri = "/register";
 
         MemberVO vo = new MemberVO();
         vo.setMemberId(idText.getText().toString());
@@ -75,19 +76,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         vo.setMemberName(nameText.getText().toString());
         vo.setMemberTel(telText.getText().toString());
 
-        try {
+        RestTempleatAsyncTask restTempleatAsyncTask = new RestTempleatAsyncTask(uri, vo);
+        restTempleatAsyncTask.execute();
 
-            String jsonString = new ObjectMapper().writeValueAsString(vo);
-            HttpAsyncTask httpAsyncTask = new HttpAsyncTask(addr, jsonString);
-            String result = httpAsyncTask.execute().get();
-
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
         finish();
 
         /*회원가입 버튼 눌렀을때 유효성 검사 하고, HttpTask로 서버에 값 보내고 난 후에 결과 보내주기*/
