@@ -3,6 +3,8 @@ package com.example.user.foodtruck;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -10,14 +12,22 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Layout;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.GridView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.user.adapter.LoginPreference;
 import com.example.user.adapter.MenuAdapter;
+
+import java.security.acl.Group;
 
 
 public class MainActivity extends AppCompatActivity
@@ -25,6 +35,10 @@ public class MainActivity extends AppCompatActivity
     private BackPressCloseHandler backPressCloseHandler;
 
     Intent intent;
+    Button loginBtn;
+    LinearLayout layout, navHeaderLayout;
+    GridView navGridView;
+    TextView userName, userMileage;
 
     /*쉐어프리퍼런스로 로그인 기능*/
     /*앱이 종료되면 autoLogin이 아닐때 sharedpreference (로그인)정보 삭제*/
@@ -32,7 +46,7 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        Log.d("d", "onCreate");
         backPressCloseHandler = new BackPressCloseHandler(this);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -44,26 +58,24 @@ public class MainActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-
         /*네비게이션 메뉴 바디*/
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setItemTextColor(ColorStateList.valueOf(Color.BLACK));
+        navigationView.setBackgroundColor(Color.LTGRAY);
+
         navigationView.setNavigationItemSelectedListener(this);
+
+
         View header = navigationView.getHeaderView(0);
+        loginBtn = header.findViewById(R.id.nav_loginBtn);
+        layout = header.findViewById(R.id.user_info_layout);
+        navGridView = header.findViewById(R.id.nav_gridview_menu);
+        navHeaderLayout = header.findViewById(R.id.nav_header_layout);
 
-        /*로그인정보가 있는지 없는지 확인 후 로그인버튼을 보여줄지 사용자 정보를 보여줄지 결정*/
-        SharedPreferences sharedPreferences = getSharedPreferences("login", MODE_PRIVATE);
+        userName = header.findViewById(R.id.userName);
+        userMileage = header.findViewById(R.id.userMileage);
 
-        System.out.println("shared : "+sharedPreferences);
-        System.out.println("getBoolean : "+sharedPreferences.getBoolean("autoLogin", false));
-        /*
-        if(sharedPreferences.getBoolean("autoLogin", false)){
-
-        }*/
-
-        Button loginBtn = header.findViewById(R.id.nav_loginBtn);
-        loginBtn.setOnClickListener(this);
-
-
+        loginCheck();
 
         int[] images = {R.drawable.ic_menu_slideshow, R.drawable.ic_menu_manage, R.drawable.ic_menu_send, R.drawable.ic_menu_camera, R.drawable.ic_menu_camera, R.drawable.ic_menu_camera, R.drawable.ic_menu_send, R.drawable.ic_menu_camera, R.drawable.ic_menu_share};
         String[] values = {"한식", "분식", "돈까스.회.일식", "치킨", "피자", "중국집", "족발.보쌈", "야식", "찜.탕"};
@@ -89,15 +101,19 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onClick(View v) {
 
-        Toast.makeText(getApplicationContext(), "onClick : " + v.getId(), Toast.LENGTH_SHORT).show();
-
         switch (v.getId()) {
+            /*로그인 버튼*/
             case R.id.nav_loginBtn:
                 intent = new Intent(this, LoginActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.nav_image_switcher:
 
+            case R.id.nav_header_layout:
+                intent = new Intent(this, UserDetailActivity.class);
+                startActivity(intent);
+                break;
+            default:
+                Toast.makeText(this, "없는 버튼입니다.", Toast.LENGTH_SHORT).show();
                 break;
         }
 
@@ -166,7 +182,6 @@ public class MainActivity extends AppCompatActivity
 
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        Toast.makeText(getApplicationContext(), "navigation id : " + id, Toast.LENGTH_SHORT).show();
 
         switch (id) {
             case R.id.nav_notice:
@@ -197,7 +212,33 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    protected void onRestart() {
+        super.onRestart();
+        loginCheck();
+    }
+
+    private void loginCheck() {
+        LoginPreference pref = new LoginPreference(this);
+        /*로그인정보가 있는지 없는지 확인 후 로그인버튼을 보여줄지 사용자 정보를 보여줄지 결정*/
+        boolean user = pref.getValue(LoginPreference.USER_INFO, false);
+
+        //저장된 사용자 정보가 있을때
+        if (user) {
+            //로그인버튼은 안보여주고 프로필과 사용자 정보를 보여준다.
+            loginBtn.setVisibility(View.GONE);
+            layout.setVisibility(View.VISIBLE);
+            navGridView.setVisibility(View.VISIBLE);
+            userName.setText(pref.getValue(LoginPreference.MEMBER_NAME,"anonymous"));
+            userMileage.setText(pref.getValue(LoginPreference.MEMBER_MILEAGE,"0")+"P");
+            navHeaderLayout.setOnClickListener(this);
+
+        } else { //저장된 사용자정보가 없을때
+            //로그인 버튼과 이벤트를 보여준다.
+            loginBtn.setVisibility(View.VISIBLE);
+            loginBtn.setOnClickListener(this);
+
+            layout.setVisibility(View.GONE);
+            navGridView.setVisibility(View.GONE);
+        }
     }
 }

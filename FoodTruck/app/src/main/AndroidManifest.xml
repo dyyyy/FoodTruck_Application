@@ -95,17 +95,23 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ServiceCenterActivity" />
         </activity>
-
         <activity android:name=".LoginActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
-
         </activity>
         <activity android:name=".RegisterActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".LoginActivity" />
+        </activity>
+        <activity
+            android:name=".UserDetailActivity"
+            android:label="내 정보 수정">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+
         </activity>
     </application>
 
