@@ -12,6 +12,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.user.adapter.LoginPreference;
 import com.example.user.adapter.ServiceQaInfoAdapter;
 import com.example.user.networkutil.NetworkAvailable;
 import com.example.user.networkutil.RestTempleatAsyncTask;
@@ -40,75 +41,77 @@ public class ServiceQaInfoActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeButtonEnabled(true);
 
+        LoginPreference pref = new LoginPreference(this);
+        /*로그인정보가 있는지 없는지 확인 후 로그인버튼을 보여줄지 사용자 정보를 보여줄지 결정*/
+        boolean user = pref.getValue(LoginPreference.USER_INFO, false);
 
-        NetworkAvailable networkAvailable = new NetworkAvailable(this);
-        if (networkAvailable.isNetworkAvailable()) {
-            String uri = "/user/inqueryinfo/{id}";
+        //저장된 사용자 정보가 있을때
+        if (user) {
+            NetworkAvailable networkAvailable = new NetworkAvailable(this);
+            if (networkAvailable.isNetworkAvailable()) {
+                String uri = "/user/inqueryinfo/{id}";
 
+                try {
+                    JSONObject jsonObject = new JSONObject();
 
-            try {
-                JSONObject jsonObject = new JSONObject();
-                /*로그인 기능 구현되면 삭제*/
-                SharedPreferences sharedPreferences = getSharedPreferences("login", MODE_PRIVATE);
-                /*
-                if(){
+                    jsonObject.put("id", pref.getValue(LoginPreference.MEMBER_ID, null));
 
-                }
-*/
+                    RestTempleatAsyncTask restTempleatAsyncTask = new RestTempleatAsyncTask(uri, jsonObject.toString());
 
-                jsonObject.put("id", "user@naver.com");
+                    String result = restTempleatAsyncTask.execute().get();
 
-                RestTempleatAsyncTask restTempleatAsyncTask = new RestTempleatAsyncTask(uri, jsonObject.toString());
+                    if (result != null) {
+                        List<MInquiryVO> list = new ObjectMapper().readValue(result, new TypeReference<List<MInquiryVO>>() {
+                        });
+                        ListAdapter listAdapter = new ServiceQaInfoAdapter(this, list);
+                        ListView listView = findViewById(R.id.qalistView);
+                        listView.setAdapter(listAdapter);
 
-                String result = restTempleatAsyncTask.execute().get();
+                        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-                if (result != null) {
-                    List<MInquiryVO> list = new ObjectMapper().readValue(result, new TypeReference<List<MInquiryVO>>() {
-                    });
-                    ListAdapter listAdapter = new ServiceQaInfoAdapter(this, list);
-                    ListView listView = findViewById(R.id.qalistView);
-                    listView.setAdapter(listAdapter);
+                                Toast.makeText(getApplicationContext(), "" + i, Toast.LENGTH_SHORT);
+                                MInquiryVO item = (MInquiryVO) adapterView.getItemAtPosition(i);
+                                Intent intent;
+                                if (item != null) {
+                                    intent = new Intent(ServiceQaInfoActivity.this, ServiceQaInfoDetailActivity.class);
+                                    intent.putExtra("object", item);
+                                    startActivity(intent);
 
-                    listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                                } else {
+                                    Toast.makeText(getApplicationContext(), "게시물이 없습니다.", Toast.LENGTH_SHORT).show();
 
-                            Toast.makeText(getApplicationContext(), "" + i, Toast.LENGTH_SHORT);
-                            MInquiryVO item = (MInquiryVO) adapterView.getItemAtPosition(i);
-                            Intent intent;
-                            if (item != null) {
-                                intent = new Intent(ServiceQaInfoActivity.this, ServiceQaInfoDetailActivity.class);
-                                intent.putExtra("object", item);
-                                startActivity(intent);
-
-                            } else {
-                                Toast.makeText(getApplicationContext(), "게시물이 없습니다.", Toast.LENGTH_SHORT).show();
-
+                                }
                             }
-                        }
-                    });
+                        });
 
-                    Log.d("result:", "" + result);
+                        Log.d("result:", "" + result);
+                    }
+
+
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (JsonParseException e) {
+                    e.printStackTrace();
+                } catch (JsonMappingException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
 
 
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (ExecutionException e) {
-                e.printStackTrace();
-            } catch (JsonParseException e) {
-                e.printStackTrace();
-            } catch (JsonMappingException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (JSONException e) {
-                e.printStackTrace();
+            } else {
+                Toast.makeText(this, "network is not available", Toast.LENGTH_SHORT).show();
             }
-        } else {
-            Toast.makeText(this, "network is not available", Toast.LENGTH_SHORT).show();
+        } else { //저장된 사용자정보가 없을때
+            Toast.makeText(this, "로그인 되어있지 않습니다.", Toast.LENGTH_SHORT).show();
+            finish();
         }
-
 
     }
 }

@@ -87,7 +87,7 @@ public class LoginPreference {
         return pref.getBoolean(key, defaultValue);
     }
 
-    public Map<String, ?> getValue() {
+    public Map<String, ?> getValue(String memberId) {
         SharedPreferences pref = context.getSharedPreferences(PREF_NAME, Activity.MODE_PRIVATE);
         return pref.getAll();
     }

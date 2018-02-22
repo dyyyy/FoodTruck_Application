@@ -107,7 +107,7 @@
         </activity>
         <activity
             android:name=".UserDetailActivity"
-            android:label="내 정보 수정">
+            android:label="내 정보">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />

@@ -35,10 +35,10 @@ public class MainActivity extends AppCompatActivity
     private BackPressCloseHandler backPressCloseHandler;
 
     Intent intent;
-    Button loginBtn;
-    LinearLayout layout, navHeaderLayout;
-    GridView navGridView;
-    TextView userName, userMileage;
+    Button loginBtn, registerBtn;
+    LinearLayout userInfoLayout, userLoginLayout;
+
+    TextView userName, userMileage, loginText;
 
     /*쉐어프리퍼런스로 로그인 기능*/
     /*앱이 종료되면 autoLogin이 아닐때 sharedpreference (로그인)정보 삭제*/
@@ -67,18 +67,22 @@ public class MainActivity extends AppCompatActivity
 
 
         View header = navigationView.getHeaderView(0);
+        loginText = header.findViewById(R.id.login_text); //
         loginBtn = header.findViewById(R.id.nav_loginBtn);
-        layout = header.findViewById(R.id.user_info_layout);
-        navGridView = header.findViewById(R.id.nav_gridview_menu);
-        navHeaderLayout = header.findViewById(R.id.nav_header_layout);
+        registerBtn = header.findViewById(R.id.nav_register); //
+
+        userInfoLayout = header.findViewById(R.id.nav_userinfo_layout);
+        userLoginLayout = header.findViewById(R.id.nav_login_layout);
+
+       // navHeaderLayout = header.findViewById(R.id.nav_header_layout);
 
         userName = header.findViewById(R.id.userName);
         userMileage = header.findViewById(R.id.userMileage);
 
         loginCheck();
 
-        int[] images = {R.drawable.ic_menu_slideshow, R.drawable.ic_menu_manage, R.drawable.ic_menu_send, R.drawable.ic_menu_camera, R.drawable.ic_menu_camera, R.drawable.ic_menu_camera, R.drawable.ic_menu_send, R.drawable.ic_menu_camera, R.drawable.ic_menu_share};
-        String[] values = {"한식", "분식", "돈까스.회.일식", "치킨", "피자", "중국집", "족발.보쌈", "야식", "찜.탕"};
+        int[] images = {R.drawable.korean, R.drawable.snack, R.drawable.japanese, R.drawable.chicken, R.drawable.pizza, R.drawable.chinese, R.drawable.pig, R.drawable.midnight, R.drawable.western};
+        String[] values = {"한식", "분식", "돈까스.회.일식", "치킨", "피자", "중국집", "족발.보쌈", "야식", "양식"};
         ExpandableHeightGridView gridView = findViewById(R.id.gridView);
         gridView.setExpanded(true);
         MenuAdapter menuAdapter = new MenuAdapter(this, images, values);
@@ -107,8 +111,11 @@ public class MainActivity extends AppCompatActivity
                 intent = new Intent(this, LoginActivity.class);
                 startActivity(intent);
                 break;
-
-            case R.id.nav_header_layout:
+            case R.id.nav_register:
+                intent = new Intent(this, RegisterActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.nav_userinfo_layout:
                 intent = new Intent(this, UserDetailActivity.class);
                 startActivity(intent);
                 break;
@@ -225,20 +232,25 @@ public class MainActivity extends AppCompatActivity
         //저장된 사용자 정보가 있을때
         if (user) {
             //로그인버튼은 안보여주고 프로필과 사용자 정보를 보여준다.
-            loginBtn.setVisibility(View.GONE);
-            layout.setVisibility(View.VISIBLE);
-            navGridView.setVisibility(View.VISIBLE);
+
+            userInfoLayout.setVisibility(View.VISIBLE);
+            userLoginLayout.setVisibility(View.GONE);
+
+            userInfoLayout.setOnClickListener(this);
+
             userName.setText(pref.getValue(LoginPreference.MEMBER_NAME,"anonymous"));
             userMileage.setText(pref.getValue(LoginPreference.MEMBER_MILEAGE,"0")+"P");
-            navHeaderLayout.setOnClickListener(this);
+
 
         } else { //저장된 사용자정보가 없을때
             //로그인 버튼과 이벤트를 보여준다.
-            loginBtn.setVisibility(View.VISIBLE);
-            loginBtn.setOnClickListener(this);
 
-            layout.setVisibility(View.GONE);
-            navGridView.setVisibility(View.GONE);
+
+            userInfoLayout.setVisibility(View.GONE);
+            userLoginLayout.setVisibility(View.VISIBLE);
+
+            loginBtn.setOnClickListener(this);
+            registerBtn.setOnClickListener(this);
         }
     }
 }

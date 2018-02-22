@@ -20,6 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+
             <TextView
                 android:id="@+id/textView8"
                 android:layout_width="match_parent"
@@ -55,24 +56,6 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:id="@+id/textView2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="회원아이디" />
-
-                <EditText
-                    android:id="@+id/qa_id_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:inputType="textPersonName"
-                    android:text="user@naver.com" />
-            </TableRow>
 
             <TableRow
                 android:layout_width="match_parent"
@@ -88,13 +71,14 @@
                     android:id="@+id/qa_title_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:autoText="true"
                     android:ems="10"
                     android:inputType="textPersonName" />
             </TableRow>
 
             <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="124dp">
 
                 <TextView
                     android:id="@+id/textView6"
@@ -106,6 +90,7 @@
                     android:id="@+id/qa_content_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:autoText="true"
                     android:ems="10"
                     android:inputType="textMultiLine" />
             </TableRow>
@@ -129,6 +114,8 @@
 
 
             </TableRow>
+
+
         </TableLayout>
 
         <LinearLayout
@@ -143,14 +130,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="다시쓰기" />
+                android:background="@color/colorPrimary"
+                android:paddingRight="2dp"
+                android:text="다시쓰기"
+                android:textColor="@android:color/background_light" />
 
             <Button
                 android:id="@+id/qa_submit_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="문의하기" />
+                android:background="@color/colorPrimary"
+                android:paddingLeft="2dp"
+                android:text="문의하기"
+                android:textColor="@android:color/background_light" />
         </LinearLayout>
     </LinearLayout>
 
