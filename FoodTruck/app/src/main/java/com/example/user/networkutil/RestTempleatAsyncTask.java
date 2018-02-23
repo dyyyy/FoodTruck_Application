@@ -70,9 +70,6 @@ public class RestTempleatAsyncTask extends AsyncTask<String, Integer, String> {
             case "/event":
                 result = restTemplate.getForObject(baseUri, String.class);
                 return result;
-
-
-
             case "/noticecount":
             case "/eventcount":
             case "/user/memberinquiry":

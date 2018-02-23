@@ -55,7 +55,8 @@
                 android:layout_weight="1"
                 android:ems="10"
                 android:hint="이메일 주소 입력(필수)"
-                android:inputType="textEmailAddress" />
+                android:inputType="textEmailAddress"
+                android:text="user@naver.com" />
 
             <Button
                 android:id="@+id/idcheck"
@@ -74,7 +75,8 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="이름"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:text="문현성" />
 
         <EditText
             android:id="@+id/telText"
@@ -82,7 +84,8 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="연락처"
-            android:inputType="phone" />
+            android:inputType="phone"
+            android:text="010-9960-7857" />
 
         <EditText
             android:id="@+id/pwText"
@@ -90,7 +93,8 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="비밀번호 입력(필수/최소8자리 이상)"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            android:text="12345678" />
 
         <EditText
             android:id="@+id/pwCheckText"
@@ -98,14 +102,17 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="비밀번호 확인"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            android:text="12345678" />
+
         <EditText
             android:id="@+id/licenseText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="라이센스번호 (11자리)"
-            android:inputType="textEmailAddress" />
+            android:inputType="textEmailAddress"
+            android:text="1234567890" />
         <CheckBox
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
