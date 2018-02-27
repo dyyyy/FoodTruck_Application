@@ -34,6 +34,8 @@ public class NoticeAdapter extends ArrayAdapter<NoticeVO> {
         LayoutInflater layoutInflater = LayoutInflater.from(getContext());
         View view = layoutInflater.inflate(R.layout.board_item, parent, false);
 
+
+
         NoticeVO vo = list.get(position);
 
         TextView textView = view.findViewById(R.id.textView);

@@ -17,6 +17,7 @@ import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by bit-user on 2018-02-09.
@@ -29,7 +30,7 @@ public class RestTempleatAsyncTask extends AsyncTask<String, Integer, String> {
     String jsonString;
     String result = null;
     Object vo;
-
+    Map params;
     HttpHeaders httpHeaders;
 
     public RestTempleatAsyncTask(String uri) {
@@ -39,6 +40,10 @@ public class RestTempleatAsyncTask extends AsyncTask<String, Integer, String> {
     public RestTempleatAsyncTask(String uri, String jsonString) {
         this.uri = uri;
         this.jsonString = jsonString;
+    }
+    public RestTempleatAsyncTask(String uri, Map params) {
+        this.uri = uri;
+        this.params= params;
     }
 
     public RestTempleatAsyncTask(String uri, Object vo) {
@@ -66,9 +71,9 @@ public class RestTempleatAsyncTask extends AsyncTask<String, Integer, String> {
     protected String doInBackground(String... strings) {
 
         switch (uri) {
-            case "/notice":
-            case "/event":
-                result = restTemplate.getForObject(baseUri, String.class);
+            case "/notice/{pageNo}":
+            case "/event/{pageNo}":
+                result = restTemplate.getForObject(baseUri, String.class, params);
                 return result;
             case "/noticecount":
             case "/eventcount":

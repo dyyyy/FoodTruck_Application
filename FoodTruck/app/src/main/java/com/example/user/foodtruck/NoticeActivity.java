@@ -8,9 +8,11 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.user.adapter.NoticeAdapter;
@@ -36,9 +38,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
-public class NoticeActivity extends AppCompatActivity {
-
-
+public class NoticeActivity extends AppCompatActivity implements AdapterView.OnItemClickListener, AbsListView.OnScrollListener {
+    ListView listView;
+    private int page = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,37 +53,26 @@ public class NoticeActivity extends AppCompatActivity {
         NetworkAvailable networkAvailable = new NetworkAvailable(this);
         List<NoticeVO> list;
         if (networkAvailable.isNetworkAvailable()) {
-            String uri = "/notice";
+            String uri = "/notice/{pageNo}";
             try {
 
-                RestTempleatAsyncTask restTempleatAsyncTask = new RestTempleatAsyncTask(uri);
+                Map<String, Integer> params = new HashMap<String, Integer>();
+                params.put("pageNo",page);
+                RestTempleatAsyncTask restTempleatAsyncTask = new RestTempleatAsyncTask(uri, params);
                 String result = restTempleatAsyncTask.execute().get();
 
                 list = new ObjectMapper().readValue(result, new TypeReference<List<NoticeVO>>() {
                 });
 
                 ListAdapter listAdapter = new NoticeAdapter(this, list);
-                ListView listView = findViewById(R.id.noticeListview);
+                listView = findViewById(R.id.noticeListview);
                 listView.setAdapter(listAdapter);
                 /*공지사항 리스너*/
-                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                listView.setOnItemClickListener(this);
+                listView.setOnScrollListener(this);
+                ProgressBar progressBar = findViewById(R.id.progressBar);
+                progressBar.setVisibility(View.GONE);
 
-                        NoticeVO vo = (NoticeVO) adapterView.getItemAtPosition(i);
-
-                        Intent intent;
-                        if (vo != null) {
-                            intent = new Intent(NoticeActivity.this, NoticeDetailActivity.class);
-                            intent.putExtra("object", vo);
-                            startActivity(intent);
-
-                        } else {
-                            Toast.makeText(getApplicationContext(), "게시물이 없습니다.", Toast.LENGTH_SHORT).show();
-
-                        }
-                    }
-                });
 
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -106,4 +97,42 @@ public class NoticeActivity extends AppCompatActivity {
         finish();
     }
 
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+
+        NoticeVO vo = (NoticeVO) parent.getItemAtPosition(position);
+
+        Intent intent;
+        if (vo != null) {
+            intent = new Intent(NoticeActivity.this, NoticeDetailActivity.class);
+            intent.putExtra("object", vo);
+            startActivity(intent);
+
+        } else {
+            Toast.makeText(getApplicationContext(), "게시물이 없습니다.", Toast.LENGTH_SHORT).show();
+
+        }
+
+    }
+
+    @Override
+    public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+        if( listView.canScrollVertically(-1)){
+            Toast.makeText(getApplicationContext(), "scroll!! end", Toast.LENGTH_SHORT).show();
+        }
+        if(listView.canScrollVertically(1)){
+            Log.d("a", "scroll!! first");
+
+        }
+
+        Log.d("a", "onScrollStateChanged: "+scrollState+"virtically-1"+listView.canScrollVertically(-1)+"virtically1"+listView.canScrollVertically(1));
+    }
+
+    @Override
+    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+        page++;
+        Log.d("a","onScroll"+page+" firstvisibleitem:"+ firstVisibleItem+" visibleitemcount:"+visibleItemCount+" totalitemcount:"+totalItemCount);
+    }
 }
