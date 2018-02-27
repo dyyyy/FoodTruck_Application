@@ -84,14 +84,14 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                                 break;
                             case "checked":
                                 //Toast.makeText(this, "사용 가능한 아이디입니다.", Toast.LENGTH_SHORT).show();
-                                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-                                builder.setMessage("사용가능한 아이디입니다 사용하시겠습니까?.").setPositiveButton("예", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        //idText.setFocusable(false);
-                                        idText.setEnabled(false);
-                                        //idText.invalidate();
-                                        idCheck = true;
+                                        AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                                        builder.setMessage("사용가능한 아이디입니다 사용하시겠습니까?.").setPositiveButton("예", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                //idText.setFocusable(false);
+                                                idText.setEnabled(false);
+                                                //idText.invalidate();
+                                                idCheck = true;
                                     }
                                 }).setNegativeButton("아니요", new DialogInterface.OnClickListener() {
                                     @Override
