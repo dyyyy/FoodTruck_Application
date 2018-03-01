@@ -40,13 +40,7 @@ import java.util.concurrent.ExecutionException;
 
 public class NoticeActivity extends AppCompatActivity implements AdapterView.OnItemClickListener, AbsListView.OnScrollListener {
     ListView listView;
-    int totalCount = 255; //db의 count 값
-    int listCount = 10; //표시될 게시물수
-    int totalPage = totalCount/listCount; //총 페이지수
-
-
-
-
+    private int page = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,20 +55,9 @@ public class NoticeActivity extends AppCompatActivity implements AdapterView.OnI
         if (networkAvailable.isNetworkAvailable()) {
             String uri = "/notice/{pageNo}";
             try {
-                //총 페이지수에서 남은 게시물이 있는경우 +1
-                if(totalCount % listCount >0){
-                    totalPage++;
-                }
-
-                int page=1; // 현재 보고있는 페이지
-                if(totalPage < page){
-                    page = totalPage;
-                }
-                int startPage;
-                int endPage;
 
                 Map<String, Integer> params = new HashMap<String, Integer>();
-                params.put("pageNo", page);
+                params.put("pageNo",page);
                 RestTempleatAsyncTask restTempleatAsyncTask = new RestTempleatAsyncTask(uri, params);
                 String result = restTempleatAsyncTask.execute().get();
 
@@ -136,22 +119,20 @@ public class NoticeActivity extends AppCompatActivity implements AdapterView.OnI
     @Override
     public void onScrollStateChanged(AbsListView view, int scrollState) {
 
-        if (listView.canScrollVertically(1)) {
-            Log.i("tag", "top, of list");
-        } else if (!listView.canScrollVertically(1)) {
-            Log.i("tag", "end, of list");
-        } else {
-
-            Log.i("tag", "idle");
+        if( listView.canScrollVertically(-1)){
+            Toast.makeText(getApplicationContext(), "scroll!! end", Toast.LENGTH_SHORT).show();
+        }
+        if(listView.canScrollVertically(1)){
+            Log.d("a", "scroll!! first");
 
         }
 
-        Log.d("a", "onScrollStateChanged: " + scrollState + "virtically-1" + listView.canScrollVertically(-1) + "virtically1" + listView.canScrollVertically(1));
+        Log.d("a", "onScrollStateChanged: "+scrollState+"virtically-1"+listView.canScrollVertically(-1)+"virtically1"+listView.canScrollVertically(1));
     }
 
     @Override
     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-
-        Log.d("a", "onScroll_ firstvisibleitem:" + firstVisibleItem + " visibleitemcount:" + visibleItemCount + " totalitemcount:" + totalItemCount);
+        page++;
+        Log.d("a","onScroll"+page+" firstvisibleitem:"+ firstVisibleItem+" visibleitemcount:"+visibleItemCount+" totalitemcount:"+totalItemCount);
     }
 }
