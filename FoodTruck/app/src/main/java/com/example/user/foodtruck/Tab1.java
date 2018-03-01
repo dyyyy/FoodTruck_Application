@@ -18,6 +18,10 @@ import java.util.List;
  */
 
 public class Tab1 extends Fragment{
+    private RecyclerView recyclerView;
+    private RecyclerView.Adapter adapter;
+    private List<FoodTruckVO> listItems;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
