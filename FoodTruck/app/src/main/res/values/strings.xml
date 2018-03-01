@@ -9,14 +9,14 @@
 
     <string-array name="menu_list">
         <item>한식</item>
-        <item>중식</item>
-        <item>일식</item>
+        <item>분식</item>
+        <item>돈까스.회.일식</item>
+        <item>치킨</item>
+        <item>피자</item>
+        <item>중국집</item>
+        <item>족발.보쌈</item>
+        <item>야식</item>
         <item>양식</item>
-        <item>야식</item>
-        <item>야식</item>
-        <item>야식</item>
-        <item>야식</item>
-        <item>야식</item>
     </string-array>
 
     <string-array name="scspinner1_arr">

@@ -28,11 +28,6 @@
             android:orientation="vertical">
 
 
-            <SearchView
-                android:id="@+id/searchView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
             <com.example.user.foodtruck.ExpandableHeightGridView
                 android:id="@+id/gridView"
                 android:layout_width="match_parent"

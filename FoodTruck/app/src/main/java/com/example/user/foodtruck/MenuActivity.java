@@ -1,8 +1,7 @@
 package com.example.user.foodtruck;
 
+import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -17,24 +16,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import android.widget.TextView;
+import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.user.adapter.MenuTabListAdapter;
+
 public class MenuActivity extends AppCompatActivity {
-
-    /**
-     * The {@link android.support.v4.view.PagerAdapter} that will provide
-     * fragments for each of the sections. We use a
-     * {@link FragmentPagerAdapter} derivative, which will keep every
-     * loaded fragment in memory. If this becomes too memory intensive, it
-     * may be best to switch to a
-     * {@link android.support.v4.app.FragmentStatePagerAdapter}.
-     */
+    int setPosition;
     private SectionsPagerAdapter mSectionsPagerAdapter;
-
-    /**
-     * The {@link ViewPager} that will host the section contents.
-     */
     private ViewPager mViewPager;
 
     @Override
@@ -45,13 +34,17 @@ public class MenuActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
-        // Set up the ViewPager with the sections adapter.
+        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        setPosition = getIntent().getIntExtra("position", 0);
+
         mViewPager = (ViewPager) findViewById(R.id.container);
+
+
+        Toast.makeText(this, "position" + setPosition, Toast.LENGTH_SHORT).show();
+
         mViewPager.setAdapter(mSectionsPagerAdapter);
+        mViewPager.setCurrentItem(setPosition, false);
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
 
@@ -82,24 +75,14 @@ public class MenuActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
-    /**
-     * A placeholder fragment containing a simple view.
-     */
+/*
     public static class PlaceholderFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
+
         private static final String ARG_SECTION_NUMBER = "section_number";
 
         public PlaceholderFragment() {
         }
 
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
         public static PlaceholderFragment newInstance(int sectionNumber) {
             PlaceholderFragment fragment = new PlaceholderFragment();
             Bundle args = new Bundle();
@@ -108,37 +91,106 @@ public class MenuActivity extends AppCompatActivity {
             return fragment;
         }
 
+        private View view;
+
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.menu_tab1, container, false);
-            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
-            return rootView;
+
+            if (view == null) {
+                view = inflater.inflate(R.layout.menu_tab, container, false);
+                Toast.makeText(view.getContext(), "arg : " + getArguments().getInt(ARG_SECTION_NUMBER), Toast.LENGTH_SHORT).show();
+            } else {
+                return view;
+            }
+
+            return view;
+
         }
     }
 
-    /**
-     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
-     * one of the sections/tabs/pages.
-     */
+*/
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
         }
 
+
         @Override
         public Fragment getItem(int position) {
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(position + 1);
+            /*선택된 메뉴 position*/
+
+            switch (position) {
+                case 0:
+                    Tab1 tab1 = new Tab1();
+                    return tab1;
+                case 1:
+                    Tab2 tab2 = new Tab2();
+                    return tab2;
+                case 2:
+                    Tab3 tab3 = new Tab3();
+                    return tab3;
+                case 3:
+                    Tab4 tab4 = new Tab4();
+                    return tab4;
+                case 4:
+                    Tab5 tab5 = new Tab5();
+                    return tab5;
+                case 5:
+                    Tab6 tab6 = new Tab6();
+                    return tab6;
+                case 6:
+                    Tab7 tab7 = new Tab7();
+                    return tab7;
+                case 7:
+                    Tab8 tab8 = new Tab8();
+                    return tab8;
+                case 8:
+                    Tab9 tab9 = new Tab9();
+                    return tab9;
+                default:
+                    return null;
+
+            }
+            //return PlaceholderFragment.newInstance(position + 1);
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            switch (position) {
+                case 0:
+                    return "tab1";
+                case 1:
+                    return "tab2";
+                case 2:
+                    return "tab3";
+                case 3:
+                    return "tab4";
+                case 4:
+                    return "tab5";
+                case 5:
+                    return "tab6";
+                case 6:
+                    return "tab7";
+                case 7:
+                    return "tab8";
+                case 8:
+                    return "tab9";
+                default:
+                    return "error";
+
+
+            }
         }
 
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 3;
+            return 9;
         }
+
     }
+
+
 }

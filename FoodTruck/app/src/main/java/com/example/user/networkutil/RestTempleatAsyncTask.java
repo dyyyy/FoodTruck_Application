@@ -53,7 +53,7 @@ public class RestTempleatAsyncTask extends AsyncTask<String, Integer, String> {
 
     @Override
     protected void onPreExecute() {
-        baseUri = "http://192.168.1.34:8090/android" + uri;
+        baseUri = "http://192.168.0.9:8090/android" + uri;
         restTemplate = new RestTemplate();
 
         httpHeaders = new HttpHeaders();
@@ -73,6 +73,7 @@ public class RestTempleatAsyncTask extends AsyncTask<String, Integer, String> {
         switch (uri) {
             case "/notice/{pageNo}":
             case "/event/{pageNo}":
+            case "/getfoodtrucklist/{pageNo}":
                 result = restTemplate.getForObject(baseUri, String.class, params);
                 return result;
             case "/noticecount":

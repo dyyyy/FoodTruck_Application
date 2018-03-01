@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity
         loginCheck();
 
         int[] images = {R.drawable.korean, R.drawable.snack, R.drawable.japanese, R.drawable.chicken, R.drawable.pizza, R.drawable.chinese, R.drawable.pig, R.drawable.midnight, R.drawable.western};
-        String[] values = {"한식", "분식", "돈까스.회.일식", "치킨", "피자", "중국집", "족발.보쌈", "야식", "양식"};
+        String[] values = getResources().getStringArray(R.array.menu_list);
         ExpandableHeightGridView gridView = findViewById(R.id.gridView);
         gridView.setExpanded(true);
         MenuAdapter menuAdapter = new MenuAdapter(this, images, values);
