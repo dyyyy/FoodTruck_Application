@@ -1,10 +1,12 @@
 package com.example.user.adapter;
 
+import android.app.ActionBar;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -47,7 +49,7 @@ public class GridAdapter extends BaseAdapter {
 
         if (convertView == null) {
             view = new View(context);
-            view = layoutInflater.inflate(R.layout.category_item, null);
+            view = layoutInflater.inflate(R.layout.menu_item, null);
             ImageView imageView = view.findViewById(R.id.grid_item_image);
             TextView textView = view.findViewById(R.id.grid_item_text);
 

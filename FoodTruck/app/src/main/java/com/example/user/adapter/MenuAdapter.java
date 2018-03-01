@@ -43,11 +43,11 @@ public class MenuAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater layoutInflater =(LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        if (convertView == null) {
+        if(convertView == null){
             view = new View(context);
-            view = layoutInflater.inflate(R.layout.category_item, null);
+            view = layoutInflater.inflate(R.layout.menu_item, null);
             ImageView imageView = view.findViewById(R.id.grid_item_image);
             TextView textView = view.findViewById(R.id.grid_item_text);
 
