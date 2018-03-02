@@ -18,14 +18,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.user.adapter.MenuTabAdapter;
 import com.example.user.networkutil.RestTempleatAsyncTask;
 import com.example.user.vo.FoodTruckVO;
-import com.example.user.vo.NoticeVO;
+import com.example.user.vo.ReviewVO;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -39,7 +38,7 @@ public class MenuActivity extends AppCompatActivity {
     int setPosition;
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
-    private Toolbar toolbar;
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,13 +85,18 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     public static class PlaceholderFragment extends Fragment implements AdapterView.OnItemClickListener, View.OnClickListener {
+        Toolbar toolbar;
 
         private static final String ARG_SECTION_NUMBER = "section_number";
+
+        private static int primaryNumber;
 
         public PlaceholderFragment() {
         }
 
         public static PlaceholderFragment newInstance(int sectionNumber) {
+            primaryNumber = sectionNumber;
+
             PlaceholderFragment fragment = new PlaceholderFragment();
             Bundle args = new Bundle();
             args.putInt(ARG_SECTION_NUMBER, sectionNumber);
@@ -102,8 +106,10 @@ public class MenuActivity extends AppCompatActivity {
         }
 
         private View mFragmentView;
-        private List<FoodTruckVO> lists1, lists2, lists3, lists4, lists5, lists6, lists7, lists8, lists9;
+        private List<FoodTruckVO> ftrucklist1, ftrucklist2, ftrucklist3, ftrucklist4, ftrucklist5, ftrucklist6, ftrucklist7, ftrucklist8, ftrucklist9;
+
         private String addr = "/getfoodtrucklist/{category}";
+
         //카테고리별 페이지
 
         private ListView listView;
@@ -113,19 +119,18 @@ public class MenuActivity extends AppCompatActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
 
+            Log.d("primaryNumber", " : " + primaryNumber);
+
             if (mFragmentView != null) {
+
                 return mFragmentView;
             } else {
+                //한번씩만 호출됨 그뒤로 호출안됨..
                 mFragmentView = inflater.inflate(R.layout.menu_tab, container, false);
-
-
-                //한번씩만 호출됨
-
                 Map<String, Integer> map = new HashMap<>();
-
                 map.put("category", getArguments().getInt(ARG_SECTION_NUMBER));
-
                 RestTempleatAsyncTask restTempleatAsyncTask = new RestTempleatAsyncTask(addr, map);
+
                 try {
 
                     String result = restTempleatAsyncTask.execute().get();
@@ -133,75 +138,75 @@ public class MenuActivity extends AppCompatActivity {
                     switch (getArguments().getInt(ARG_SECTION_NUMBER)) {
 
                         case 1:
-                            lists1 = new ObjectMapper().readValue(result, new TypeReference<List<FoodTruckVO>>() {
+                            ftrucklist1 = new ObjectMapper().readValue(result, new TypeReference<List<FoodTruckVO>>() {
                             });
 
                             listView = mFragmentView.findViewById(R.id.menutablistview);
-                            menuTabAdapter = new MenuTabAdapter(listView.getContext(), lists1);
+                            menuTabAdapter = new MenuTabAdapter(listView.getContext(), ftrucklist1);
                             listView.setAdapter(menuTabAdapter);
                             listView.setOnItemClickListener(this);
                             break;
                         case 2:
-                            lists2 = new ObjectMapper().readValue(result, new TypeReference<List<FoodTruckVO>>() {
+                            ftrucklist2 = new ObjectMapper().readValue(result, new TypeReference<List<FoodTruckVO>>() {
                             });
                             listView = mFragmentView.findViewById(R.id.menutablistview);
-                            menuTabAdapter = new MenuTabAdapter(listView.getContext(), lists2);
+                            menuTabAdapter = new MenuTabAdapter(listView.getContext(), ftrucklist2);
                             listView.setAdapter(menuTabAdapter);
                             listView.setOnItemClickListener(this);
                             break;
                         case 3:
-                            lists3 = new ObjectMapper().readValue(result, new TypeReference<List<FoodTruckVO>>() {
+                            ftrucklist3 = new ObjectMapper().readValue(result, new TypeReference<List<FoodTruckVO>>() {
                             });
                             listView = mFragmentView.findViewById(R.id.menutablistview);
-                            menuTabAdapter = new MenuTabAdapter(listView.getContext(), lists3);
+                            menuTabAdapter = new MenuTabAdapter(listView.getContext(), ftrucklist3);
                             listView.setAdapter(menuTabAdapter);
                             listView.setOnItemClickListener(this);
                             break;
                         case 4:
-                            lists4 = new ObjectMapper().readValue(result, new TypeReference<List<FoodTruckVO>>() {
+                            ftrucklist4 = new ObjectMapper().readValue(result, new TypeReference<List<FoodTruckVO>>() {
                             });
                             listView = mFragmentView.findViewById(R.id.menutablistview);
-                            menuTabAdapter = new MenuTabAdapter(listView.getContext(), lists4);
+                            menuTabAdapter = new MenuTabAdapter(listView.getContext(), ftrucklist4);
                             listView.setAdapter(menuTabAdapter);
                             listView.setOnItemClickListener(this);
                             break;
                         case 5:
-                            lists5 = new ObjectMapper().readValue(result, new TypeReference<List<FoodTruckVO>>() {
+                            ftrucklist5 = new ObjectMapper().readValue(result, new TypeReference<List<FoodTruckVO>>() {
                             });
                             listView = mFragmentView.findViewById(R.id.menutablistview);
-                            menuTabAdapter = new MenuTabAdapter(listView.getContext(), lists5);
+                            menuTabAdapter = new MenuTabAdapter(listView.getContext(), ftrucklist5);
                             listView.setAdapter(menuTabAdapter);
                             listView.setOnItemClickListener(this);
                             break;
                         case 6:
-                            lists6 = new ObjectMapper().readValue(result, new TypeReference<List<FoodTruckVO>>() {
+                            ftrucklist6 = new ObjectMapper().readValue(result, new TypeReference<List<FoodTruckVO>>() {
                             });
                             listView = mFragmentView.findViewById(R.id.menutablistview);
-                            menuTabAdapter = new MenuTabAdapter(listView.getContext(), lists6);
+                            menuTabAdapter = new MenuTabAdapter(listView.getContext(), ftrucklist6);
                             listView.setAdapter(menuTabAdapter);
                             listView.setOnItemClickListener(this);
                             break;
                         case 7:
-                            lists7 = new ObjectMapper().readValue(result, new TypeReference<List<FoodTruckVO>>() {
+                            ftrucklist7 = new ObjectMapper().readValue(result, new TypeReference<List<FoodTruckVO>>() {
                             });
                             listView = mFragmentView.findViewById(R.id.menutablistview);
-                            menuTabAdapter = new MenuTabAdapter(listView.getContext(), lists7);
+                            menuTabAdapter = new MenuTabAdapter(listView.getContext(), ftrucklist7);
                             listView.setAdapter(menuTabAdapter);
                             listView.setOnItemClickListener(this);
                             break;
                         case 8:
-                            lists8 = new ObjectMapper().readValue(result, new TypeReference<List<FoodTruckVO>>() {
+                            ftrucklist8 = new ObjectMapper().readValue(result, new TypeReference<List<FoodTruckVO>>() {
                             });
                             listView = mFragmentView.findViewById(R.id.menutablistview);
-                            menuTabAdapter = new MenuTabAdapter(listView.getContext(), lists8);
+                            menuTabAdapter = new MenuTabAdapter(listView.getContext(), ftrucklist8);
                             listView.setAdapter(menuTabAdapter);
                             listView.setOnItemClickListener(this);
                             break;
                         case 9:
-                            lists9 = new ObjectMapper().readValue(result, new TypeReference<List<FoodTruckVO>>() {
+                            ftrucklist9 = new ObjectMapper().readValue(result, new TypeReference<List<FoodTruckVO>>() {
                             });
                             listView = mFragmentView.findViewById(R.id.menutablistview);
-                            menuTabAdapter = new MenuTabAdapter(listView.getContext(), lists9);
+                            menuTabAdapter = new MenuTabAdapter(listView.getContext(), ftrucklist9);
                             listView.setAdapter(menuTabAdapter);
                             listView.setOnItemClickListener(this);
                             break;
@@ -232,8 +237,8 @@ public class MenuActivity extends AppCompatActivity {
             if (vo != null) {
                 intent = new Intent(this.getContext(), MenuDetailActivity.class);
                 intent.putExtra("object", vo);
+
                 startActivity(intent);
-                Toast.makeText(this.getContext(), "" + vo.getFtruckImg(), Toast.LENGTH_SHORT).show();
 
             } else {
                 Toast.makeText(this.getContext(), "게시물이 없습니다.", Toast.LENGTH_SHORT).show();
@@ -292,12 +297,13 @@ public class MenuActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-            Toast.makeText(MenuActivity.this, "position"+position, Toast.LENGTH_SHORT).show();
+
             return PlaceholderFragment.newInstance(position + 1);
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
+
             switch (position) {
                 case 0:
                     return "tab1";

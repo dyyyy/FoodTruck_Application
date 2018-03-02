@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity
         backPressCloseHandler = new BackPressCloseHandler(this);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setLogo(R.mipmap.ic_launcher_round);
+        toolbar.setLogo(R.mipmap.ic_launcher_foreground);
 
         setSupportActionBar(toolbar);
 
