@@ -111,7 +111,15 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
-
+        </activity>
+        <activity
+            android:name=".MenuDetailActivity"
+            android:label="@string/title_activity_menu_detail"
+            android:parentActivityName=".MenuActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.user.foodtruck.MenuActivity" />
         </activity>
     </application>
 

@@ -41,6 +41,7 @@ import java.util.concurrent.ExecutionException;
 public class NoticeActivity extends AppCompatActivity implements AdapterView.OnItemClickListener, AbsListView.OnScrollListener {
     ListView listView;
     private int page = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,12 +54,11 @@ public class NoticeActivity extends AppCompatActivity implements AdapterView.OnI
         NetworkAvailable networkAvailable = new NetworkAvailable(this);
         List<NoticeVO> list;
         if (networkAvailable.isNetworkAvailable()) {
-            String uri = "/notice/{pageNo}";
+            String uri = "/notice";
             try {
 
-                Map<String, Integer> params = new HashMap<String, Integer>();
-                params.put("pageNo",page);
-                RestTempleatAsyncTask restTempleatAsyncTask = new RestTempleatAsyncTask(uri, params);
+
+                RestTempleatAsyncTask restTempleatAsyncTask = new RestTempleatAsyncTask(uri);
                 String result = restTempleatAsyncTask.execute().get();
 
                 list = new ObjectMapper().readValue(result, new TypeReference<List<NoticeVO>>() {
@@ -119,20 +119,20 @@ public class NoticeActivity extends AppCompatActivity implements AdapterView.OnI
     @Override
     public void onScrollStateChanged(AbsListView view, int scrollState) {
 
-        if( listView.canScrollVertically(-1)){
+        if (listView.canScrollVertically(-1)) {
             Toast.makeText(getApplicationContext(), "scroll!! end", Toast.LENGTH_SHORT).show();
         }
-        if(listView.canScrollVertically(1)){
+        if (listView.canScrollVertically(1)) {
             Log.d("a", "scroll!! first");
 
         }
 
-        Log.d("a", "onScrollStateChanged: "+scrollState+"virtically-1"+listView.canScrollVertically(-1)+"virtically1"+listView.canScrollVertically(1));
+        Log.d("a", "onScrollStateChanged: " + scrollState + "virtically-1" + listView.canScrollVertically(-1) + "virtically1" + listView.canScrollVertically(1));
     }
 
     @Override
     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
         page++;
-        Log.d("a","onScroll"+page+" firstvisibleitem:"+ firstVisibleItem+" visibleitemcount:"+visibleItemCount+" totalitemcount:"+totalItemCount);
+        Log.d("a", "onScroll" + page + " firstvisibleitem:" + firstVisibleItem + " visibleitemcount:" + visibleItemCount + " totalitemcount:" + totalItemCount);
     }
 }

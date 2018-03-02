@@ -23,7 +23,7 @@ public class ServiceQaInfoAdapter extends ArrayAdapter<MInquiryVO> {
     private List<MInquiryVO> list;
 
     public ServiceQaInfoAdapter(Context context, List<MInquiryVO> list) {
-        super(context, R.layout.board_item, list);
+        super(context, R.layout.notice_item, list);
         this.list = list;
 
     }
@@ -32,17 +32,17 @@ public class ServiceQaInfoAdapter extends ArrayAdapter<MInquiryVO> {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         LayoutInflater layoutInflater = LayoutInflater.from(getContext());
-        View view = layoutInflater.inflate(R.layout.board_item, parent, false);
+        View view = layoutInflater.inflate(R.layout.qainfo_item, parent, false);
 
         MInquiryVO vo = list.get(position);
 
-        TextView textView = view.findViewById(R.id.textView);
-        TextView textView1 = view.findViewById(R.id.textView1);
+        TextView textView = view.findViewById(R.id.qainfotextView);
+        TextView textView1 = view.findViewById(R.id.qainfotextView2);
         ImageView imageView = view.findViewById(R.id.imageView);
 
         textView.setText(vo.getQaScTitle());
         textView1.setText(vo.getQaScReg());
-        imageView.setImageResource(R.mipmap.notice_icon);
+        imageView.setImageResource(R.drawable.if_simpline_45_2305617);
 
         return view;
     }

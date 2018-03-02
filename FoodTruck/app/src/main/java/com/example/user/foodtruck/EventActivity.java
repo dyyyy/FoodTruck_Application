@@ -36,7 +36,7 @@ public class EventActivity extends AppCompatActivity {
         NetworkAvailable networkAvailable = new NetworkAvailable(this);
 
         if (networkAvailable.isNetworkAvailable()) {
-            String uri = "/event/{pageNo}";
+            String uri = "/event";
             try {
 
                 RestTempleatAsyncTask restTempleatAsyncTask = new RestTempleatAsyncTask(uri);

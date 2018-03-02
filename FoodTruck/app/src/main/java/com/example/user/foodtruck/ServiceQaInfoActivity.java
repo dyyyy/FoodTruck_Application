@@ -49,12 +49,13 @@ public class ServiceQaInfoActivity extends AppCompatActivity {
         if (user) {
             NetworkAvailable networkAvailable = new NetworkAvailable(this);
             if (networkAvailable.isNetworkAvailable()) {
-                String uri = "/user/inqueryinfo/{id}";
+                String uri = "/user/inqueryinfo/{id:.+}/{auth}";
 
                 try {
                     JSONObject jsonObject = new JSONObject();
 
                     jsonObject.put("id", pref.getValue(LoginPreference.MEMBER_ID, null));
+                    jsonObject.put("auth", pref.getValue(LoginPreference.MEMBER_AUTH));
 
                     RestTempleatAsyncTask restTempleatAsyncTask = new RestTempleatAsyncTask(uri, jsonObject.toString());
 

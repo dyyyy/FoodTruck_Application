@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity
         userInfoLayout = header.findViewById(R.id.nav_userinfo_layout);
         userLoginLayout = header.findViewById(R.id.nav_login_layout);
 
-       // navHeaderLayout = header.findViewById(R.id.nav_header_layout);
+        // navHeaderLayout = header.findViewById(R.id.nav_header_layout);
 
         userName = header.findViewById(R.id.userName);
         userMileage = header.findViewById(R.id.userMileage);
@@ -99,6 +99,7 @@ public class MainActivity extends AppCompatActivity
 
         intent = new Intent(this, MenuActivity.class);
         intent.putExtra("position", position);
+        intent.putExtra("title", parent.getItemAtPosition(position).toString());
         startActivity(intent);
     }
 
@@ -238,8 +239,8 @@ public class MainActivity extends AppCompatActivity
 
             userInfoLayout.setOnClickListener(this);
 
-            userName.setText(pref.getValue(LoginPreference.MEMBER_NAME,"anonymous"));
-            userMileage.setText(pref.getValue(LoginPreference.MEMBER_MILEAGE,"0")+"P");
+            userName.setText(pref.getValue(LoginPreference.MEMBER_NAME, "anonymous"));
+            userMileage.setText(pref.getValue(LoginPreference.MEMBER_MILEAGE, "0") + "P");
 
 
         } else { //저장된 사용자정보가 없을때

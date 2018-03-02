@@ -23,7 +23,7 @@ public class NoticeAdapter extends ArrayAdapter<NoticeVO> {
     private List<NoticeVO> list;
 
     public NoticeAdapter(Context context, List<NoticeVO> list) {
-        super(context, R.layout.board_item, list);
+        super(context, R.layout.notice_item, list);
         this.list = list;
 
     }
@@ -32,19 +32,19 @@ public class NoticeAdapter extends ArrayAdapter<NoticeVO> {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         LayoutInflater layoutInflater = LayoutInflater.from(getContext());
-        View view = layoutInflater.inflate(R.layout.board_item, parent, false);
+        View view = layoutInflater.inflate(R.layout.notice_item, parent, false);
 
 
 
         NoticeVO vo = list.get(position);
 
-        TextView textView = view.findViewById(R.id.textView);
-        TextView textView1 = view.findViewById(R.id.textView1);
+        TextView textView = view.findViewById(R.id.noticetextView);
+        TextView textView1 = view.findViewById(R.id.noticetextView2);
         ImageView imageView = view.findViewById(R.id.imageView);
 
         textView.setText(vo.getNoticeTitle());
         textView1.setText(vo.getNoticeReg());
-        imageView.setImageResource(R.mipmap.notice_icon);
+        imageView.setImageResource(R.drawable.if_simpline_16_2305634);
 
         return view;
     }

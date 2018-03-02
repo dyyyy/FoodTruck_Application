@@ -19,6 +19,9 @@
         <item>양식</item>
     </string-array>
 
+
+
+
     <string-array name="scspinner1_arr">
         <item>고객정보</item>
         <item>주문/결제</item>
@@ -53,8 +56,9 @@
 
     <string name="action_settings">Settings</string>
     <string name="title_activity_menu">MenuActivity</string>
-    <string name="tab_text_1">Tab 1</string>
-    <string name="tab_text_2">Tab 2</string>
-    <string name="tab_text_3">Tab 3</string>
+    <string name="tab_text_1">메뉴</string>
+    <string name="tab_text_2">정보</string>
+    <string name="tab_text_3">리뷰</string>
     <string name="section_format">Hello World from section: %1$d</string>
+    <string name="title_activity_menu_detail">MenuDetailActivity</string>
 </resources>

@@ -41,9 +41,10 @@ public class RestTempleatAsyncTask extends AsyncTask<String, Integer, String> {
         this.uri = uri;
         this.jsonString = jsonString;
     }
+
     public RestTempleatAsyncTask(String uri, Map params) {
         this.uri = uri;
-        this.params= params;
+        this.params = params;
     }
 
     public RestTempleatAsyncTask(String uri, Object vo) {
@@ -53,7 +54,7 @@ public class RestTempleatAsyncTask extends AsyncTask<String, Integer, String> {
 
     @Override
     protected void onPreExecute() {
-        baseUri = "http://192.168.0.9:8090/android" + uri;
+        baseUri = "http://192.168.1.19:8090/android" + uri;
         restTemplate = new RestTemplate();
 
         httpHeaders = new HttpHeaders();
@@ -71,33 +72,40 @@ public class RestTempleatAsyncTask extends AsyncTask<String, Integer, String> {
     protected String doInBackground(String... strings) {
 
         switch (uri) {
-            case "/notice/{pageNo}":
-            case "/event/{pageNo}":
-            case "/getfoodtrucklist/{pageNo}":
+            case "/notice":
+            case "/event":
+                result = restTemplate.getForObject(baseUri, String.class);
+                return result;
+
+            case "/getfoodtrucklist/{category}":
                 result = restTemplate.getForObject(baseUri, String.class, params);
                 return result;
+
             case "/noticecount":
             case "/eventcount":
             case "/user/memberinquiry":
                 restTemplate.put(baseUri, vo);
                 return result;
+
             case "/register":
                 result = restTemplate.postForObject(baseUri, vo, String.class);
                 Log.d("androidregister", ":" + result);
                 return result;
-            case "/user/inqueryinfo/{id}":
+
+            case "/user/inqueryinfo/{id:.+}/{auth}":
             case "/idcheck/{id}":
                 result = restTemplate.getForObject(baseUri, String.class, jsonString);
                 Log.d("androidregister", ":" + result);
                 return result;
+
             case "/login":
                 System.out.println("vo : " + vo.toString());
                 /*전송 인코딩 설정*/
                 HttpEntity<String> stringHttpEntity = new HttpEntity<String>(String.valueOf(vo), httpHeaders);
                 result = restTemplate.postForObject(baseUri, stringHttpEntity, String.class);
                 Log.d("login", ":" + result);
-
                 return result;
+
             default:
                 return result;
         }
