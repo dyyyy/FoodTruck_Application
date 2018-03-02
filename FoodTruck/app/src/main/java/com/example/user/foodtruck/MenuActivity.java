@@ -97,6 +97,7 @@ public class MenuActivity extends AppCompatActivity {
             Bundle args = new Bundle();
             args.putInt(ARG_SECTION_NUMBER, sectionNumber);
             fragment.setArguments(args);
+
             return fragment;
         }
 
@@ -236,7 +237,6 @@ public class MenuActivity extends AppCompatActivity {
 
             } else {
                 Toast.makeText(this.getContext(), "게시물이 없습니다.", Toast.LENGTH_SHORT).show();
-
             }
 
         }
@@ -292,7 +292,7 @@ public class MenuActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-
+            Toast.makeText(MenuActivity.this, "position"+position, Toast.LENGTH_SHORT).show();
             return PlaceholderFragment.newInstance(position + 1);
         }
 
