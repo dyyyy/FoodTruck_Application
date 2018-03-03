@@ -22,6 +22,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.user.adapter.MenuTabAdapter;
+import com.example.user.networkutil.NetworkAvailable;
 import com.example.user.networkutil.RestTempleatAsyncTask;
 import com.example.user.vo.FoodTruckVO;
 import com.example.user.vo.ReviewVO;
@@ -44,24 +45,29 @@ public class MenuActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
+        NetworkAvailable networkAvailable = new NetworkAvailable(this);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar1);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if (networkAvailable.isNetworkAvailable()) {
+            Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar1);
+            setSupportActionBar(toolbar);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-        setPosition = getIntent().getIntExtra("position", 0);
+            mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+            setPosition = getIntent().getIntExtra("position", 0);
 
-        mViewPager = (ViewPager) findViewById(R.id.container);
+            mViewPager = (ViewPager) findViewById(R.id.container);
 
-        mViewPager.setAdapter(mSectionsPagerAdapter);
-        mViewPager.setCurrentItem(setPosition, false);
+            mViewPager.setAdapter(mSectionsPagerAdapter);
+            mViewPager.setCurrentItem(setPosition, false);
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs1);
+            TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs1);
 
-        mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-        tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
-
+            mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+            tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
+        } else {
+            Toast.makeText(this, "network is not available", Toast.LENGTH_SHORT).show();
+            finish();
+        }
     }
 
 
@@ -84,17 +90,13 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     public static class PlaceholderFragment extends Fragment implements AdapterView.OnItemClickListener, View.OnClickListener {
-        Toolbar toolbar;
 
         private static final String ARG_SECTION_NUMBER = "section_number";
-
-        private static int primaryNumber;
 
         public PlaceholderFragment() {
         }
 
         public static PlaceholderFragment newInstance(int sectionNumber) {
-            primaryNumber = sectionNumber;
 
             PlaceholderFragment fragment = new PlaceholderFragment();
             Bundle args = new Bundle();
@@ -105,44 +107,37 @@ public class MenuActivity extends AppCompatActivity {
         }
 
         private View mFragmentView;
-        private List<FoodTruckVO> ftrucklist1;
 
-        private String addr = "/getfoodtrucklist/{category}";
-
-        //카테고리별 페이지
-
-        private ListView listView;
-        private MenuTabAdapter menuTabAdapter;
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-
-
-            Log.d("primaryNumber", " : " + primaryNumber);
-
+            Log.d("argument", " : " + getArguments().get(ARG_SECTION_NUMBER));
 
             if (mFragmentView != null) {
 
                 return mFragmentView;
             } else {
                 //한번씩만 호출됨 그뒤로 호출안됨..
+
                 mFragmentView = inflater.inflate(R.layout.menu_tab, container, false);
                 Map<String, Integer> map = new HashMap<>();
                 map.put("category", getArguments().getInt(ARG_SECTION_NUMBER));
+
+                String addr = "/getfoodtrucklist/{category}";
                 RestTempleatAsyncTask restTempleatAsyncTask = new RestTempleatAsyncTask(addr, map);
 
                 try {
 
                     String result = restTempleatAsyncTask.execute().get();
-                    ftrucklist1 = new ObjectMapper().readValue(result, new TypeReference<List<FoodTruckVO>>() {
+                    List<FoodTruckVO> ftrucklist1 = new ObjectMapper().readValue(result, new TypeReference<List<FoodTruckVO>>() {
                     });
 
-                    listView = mFragmentView.findViewById(R.id.menutablistview);
-                    menuTabAdapter = new MenuTabAdapter(listView.getContext(), ftrucklist1);
+                    ListView listView = mFragmentView.findViewById(R.id.menutablistview);
+                    MenuTabAdapter menuTabAdapter = new MenuTabAdapter(listView.getContext(), ftrucklist1);
                     listView.setAdapter(menuTabAdapter);
                     listView.setOnItemClickListener(this);
-                    
+
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 } catch (ExecutionException e) {

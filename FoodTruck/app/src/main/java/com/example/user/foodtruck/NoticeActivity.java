@@ -46,14 +46,14 @@ public class NoticeActivity extends AppCompatActivity implements AdapterView.OnI
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notice);
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setHomeButtonEnabled(true);
-
 
         NetworkAvailable networkAvailable = new NetworkAvailable(this);
-        List<NoticeVO> list;
         if (networkAvailable.isNetworkAvailable()) {
+            ActionBar actionBar = getSupportActionBar();
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setHomeButtonEnabled(true);
+
+
             String uri = "/notice";
             try {
 
@@ -61,7 +61,7 @@ public class NoticeActivity extends AppCompatActivity implements AdapterView.OnI
                 RestTempleatAsyncTask restTempleatAsyncTask = new RestTempleatAsyncTask(uri);
                 String result = restTempleatAsyncTask.execute().get();
 
-                list = new ObjectMapper().readValue(result, new TypeReference<List<NoticeVO>>() {
+                List<NoticeVO> list = new ObjectMapper().readValue(result, new TypeReference<List<NoticeVO>>() {
                 });
 
                 ListAdapter listAdapter = new NoticeAdapter(this, list);

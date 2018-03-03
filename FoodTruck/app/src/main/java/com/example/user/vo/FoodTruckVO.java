@@ -3,7 +3,7 @@ package com.example.user.vo;
 import java.io.Serializable;
 
 public class FoodTruckVO extends ReviewVO implements Serializable{
-	
+
 	private String ftruckNo; 		// 푸드트럭 번호
 	private String ftruckName;	 	// 푸드트럭 이름
 	private String ftruckTel; 		// 푸드트럭 전화번호
@@ -21,12 +21,12 @@ public class FoodTruckVO extends ReviewVO implements Serializable{
 	private int category; 			// 카테고리 번호
 	private String licenseNo; 		// 사업자 번호
 	private int count;				// 리뷰 총 갯수
-	private int total;				// 리뷰 평점 총 합 
+	private int total;				// 리뷰 평점 총 합
 	private String ftruckCondtion;	// 푸드트럭상태(여유 / 혼잡)
 	private String ftruckEvent;		// 푸드트럭 이벤트
-	private int eventNo;			// 이벤트 번호	
+	private int eventNo;			// 이벤트 번호
 	private String eventReg2;		// 이벤트 시간
-	
+
 	// getter & setter
 	public String getFtruckNo() {
 		return ftruckNo;
@@ -160,5 +160,5 @@ public class FoodTruckVO extends ReviewVO implements Serializable{
 	public void setEventReg2(String eventReg2) {
 		this.eventReg2 = eventReg2;
 	}
-	
+
 }

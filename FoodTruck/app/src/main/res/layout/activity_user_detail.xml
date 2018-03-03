@@ -8,7 +8,7 @@
 
     <LinearLayout
         android:layout_width="344dp"
-        android:layout_height="495dp"
+        android:layout_height="492dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
@@ -19,10 +19,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <Button
+        <TextView
             android:id="@+id/logoutBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="로그아웃" />
+            android:text="로그아웃"
+            android:textAppearance="@style/TextAppearance.AppCompat.Button" />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
