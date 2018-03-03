@@ -3,20 +3,17 @@ package com.example.user.networkutil;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.example.user.vo.MInquiryVO;
-import com.example.user.vo.MemberVO;
-
-import org.json.JSONObject;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
+import java.net.Inet4Address;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
+import java.net.UnknownHostException;
 import java.nio.charset.Charset;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -54,7 +51,8 @@ public class RestTempleatAsyncTask extends AsyncTask<String, Integer, String> {
 
     @Override
     protected void onPreExecute() {
-        baseUri = "http://192.168.0.9:8090/android" + uri;
+
+        baseUri = "http://192.168.1.19:8090/android" + uri;
         restTemplate = new RestTemplate();
 
         httpHeaders = new HttpHeaders();
@@ -70,6 +68,7 @@ public class RestTempleatAsyncTask extends AsyncTask<String, Integer, String> {
 
     @Override
     protected String doInBackground(String... strings) {
+
 
         switch (uri) {
             case "/notice":

@@ -69,9 +69,9 @@ public class MainActivity extends AppCompatActivity
 
 
         View header = navigationView.getHeaderView(0);
-        loginText = header.findViewById(R.id.login_text); //
+        loginText = header.findViewById(R.id.login_text);
         loginBtn = header.findViewById(R.id.nav_loginBtn);
-        registerBtn = header.findViewById(R.id.nav_register); //
+        registerBtn = header.findViewById(R.id.nav_register);
 
         userInfoLayout = header.findViewById(R.id.nav_userinfo_layout);
         userLoginLayout = header.findViewById(R.id.nav_login_layout);
@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity
 
         intent = new Intent(this, MenuActivity.class);
         intent.putExtra("position", position);
-        intent.putExtra("title", parent.getItemAtPosition(position).toString());
+
         startActivity(intent);
     }
 

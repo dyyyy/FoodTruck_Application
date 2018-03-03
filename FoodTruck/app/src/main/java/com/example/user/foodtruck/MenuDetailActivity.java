@@ -1,5 +1,7 @@
 package com.example.user.foodtruck;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -8,25 +10,29 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.user.networkutil.RestTempleatAsyncTask;
 import com.example.user.vo.FoodTruckVO;
-import com.example.user.vo.NoticeVO;
+import com.example.user.vo.ProductVO;
+import com.example.user.vo.ReviewVO;
 
-public class MenuDetailActivity extends AppCompatActivity {
+public class MenuDetailActivity extends AppCompatActivity implements View.OnClickListener {
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
     private int imgaddr[] = {R.drawable.img1, R.drawable.img2, R.drawable.img3, R.drawable.img4, R.drawable.img5, R.drawable.img6, R.drawable.img7, R.drawable.img8, R.drawable.img9, R.drawable.img10, R.drawable.img11};
     private Toolbar toolbar;
+    private FoodTruckVO fvo;
+    private ProductVO pvo;
+    private ReviewVO rvo;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,21 +41,43 @@ public class MenuDetailActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar2);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        fvo = (FoodTruckVO) getIntent().getSerializableExtra("object");
+
+
+        /*
+        Fragment fragment1 = new Tab1menu();
+        Bundle bundle1 = new Bundle();
+        bundle1.putSerializable("plist", plist);
+        fragment1.setArguments(bundle1);
+*/
+
+/*
+        Fragment fragment3 = new Tab3review();
+        Bundle bundle3 = new Bundle();
+        bundle3.putSerializable("rlist", rlist);
+        fragment3.setArguments(bundle3);
+*/
 
 
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
-        FoodTruckVO vo = (FoodTruckVO) getIntent().getSerializableExtra("object");
+
+
+        toolbar.setTitle(fvo.getFtruckName());
+
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs2);
 
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
 
+        Button callBtn = findViewById(R.id.callBtn);
+        callBtn.setOnClickListener(this);
 
-        ImageView imageView= findViewById(R.id.ftruckdetailimgview);
-        String addr = vo.getFtruckImg().replace("\\resources\\img\\upload\\", "");
+        ImageView imageView = findViewById(R.id.ftruckdetailimgview);
+
+        String addr = fvo.getFtruckImg().replace("\\resources\\img\\upload\\", "");
         addr = addr.replace(".jpg", "");
 
         switch (addr) {
@@ -89,21 +117,28 @@ public class MenuDetailActivity extends AppCompatActivity {
             default:
                 break;
         }
+
+        /*
+        String addr1 = "/product";
+        String addr2 = "/review";
+        String result1, result2;
+        RestTempleatAsyncTask restTempleatAsyncTask1 = new RestTempleatAsyncTask(addr1, );
+        result1 = restTempleatAsyncTask1.execute().get();
+
+        RestTempleatAsyncTask restTempleatAsyncTask2 = new RestTempleatAsyncTask(addr2, );
+        result2 = restTempleatAsyncTask2.execute().get();
+        */
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_menu_detail, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
@@ -114,23 +149,34 @@ public class MenuDetailActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * A placeholder fragment containing a simple view.
-     */
+    @Override
+    public void onClick(View v) {
+        Intent intent;
+
+        switch (v.getId()) {
+            case R.id.callBtn:
+                intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + fvo.getFtruckTel()));
+                startActivity(intent);
+                break;
+                /*바구니 구현*/
+            case R.id.basketBtn:
+                break;
+            default:
+                Toast.makeText(this, "없는 버튼입니다.", Toast.LENGTH_SHORT).show();
+                break;
+
+        }
+    }
+
+
     public static class PlaceholderFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
+
         private static final String ARG_SECTION_NUMBER = "section_number";
 
         public PlaceholderFragment() {
         }
 
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
+
         public static PlaceholderFragment newInstance(int sectionNumber) {
             PlaceholderFragment fragment = new PlaceholderFragment();
             Bundle args = new Bundle();
@@ -142,20 +188,34 @@ public class MenuDetailActivity extends AppCompatActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_menu_detail, container, false);
-            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
+            View view = inflater.inflate(R.layout.fragment_menu_detail, container, false);
+            Button btn = view.findViewById(R.id.tab1btn);
+
+            switch (getArguments().getInt(ARG_SECTION_NUMBER)) {
+                case 1:
+
+
+
+                    return view;
+                case 2:
+
+
+                    return view;
+                case 3:
+
+
+                    return view;
+                default:
+                    return null;
+            }
+
+            //TextView textView = (TextView) rootView.findViewById(R.id.section_label);
+            //textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
 
             //메뉴 정보 리뷰 보여주기
-
-            return rootView;
         }
     }
 
-    /**
-     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
-     * one of the sections/tabs/pages.
-     */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
         public SectionsPagerAdapter(FragmentManager fm) {
@@ -164,8 +224,26 @@ public class MenuDetailActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
+/*
+            switch (position) {
+                case 0:
+                    Tab1menu tab1menu = new Tab1menu();
+                    return tab1menu;
+                case 1:
 
+                    Tab2info tab2info = new Tab2info();
+                    Bundle bundle2 = new Bundle();
+                    bundle2.putSerializable("rlist", fvo);
+                    tab2info.setArguments(bundle2);
 
+                    return tab2info;
+                case 2:
+                    Tab3review tab3review = new Tab3review();
+                    return tab3review;
+                default:
+                    return null;
+            }
+*/
             return PlaceholderFragment.newInstance(position + 1);
         }
 

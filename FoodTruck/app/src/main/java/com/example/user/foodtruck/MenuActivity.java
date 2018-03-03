@@ -38,21 +38,20 @@ public class MenuActivity extends AppCompatActivity {
     int setPosition;
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
-    Toolbar toolbar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar1);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar1);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
         setPosition = getIntent().getIntExtra("position", 0);
-        String title = getIntent().getStringExtra("title");
-        toolbar.setTitle(title);
+
         mViewPager = (ViewPager) findViewById(R.id.container);
 
         mViewPager.setAdapter(mSectionsPagerAdapter);
@@ -106,7 +105,7 @@ public class MenuActivity extends AppCompatActivity {
         }
 
         private View mFragmentView;
-        private List<FoodTruckVO> ftrucklist1, ftrucklist2, ftrucklist3, ftrucklist4, ftrucklist5, ftrucklist6, ftrucklist7, ftrucklist8, ftrucklist9;
+        private List<FoodTruckVO> ftrucklist1;
 
         private String addr = "/getfoodtrucklist/{category}";
 
@@ -119,7 +118,9 @@ public class MenuActivity extends AppCompatActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
 
+
             Log.d("primaryNumber", " : " + primaryNumber);
+
 
             if (mFragmentView != null) {
 
@@ -134,86 +135,14 @@ public class MenuActivity extends AppCompatActivity {
                 try {
 
                     String result = restTempleatAsyncTask.execute().get();
+                    ftrucklist1 = new ObjectMapper().readValue(result, new TypeReference<List<FoodTruckVO>>() {
+                    });
 
-                    switch (getArguments().getInt(ARG_SECTION_NUMBER)) {
-
-                        case 1:
-                            ftrucklist1 = new ObjectMapper().readValue(result, new TypeReference<List<FoodTruckVO>>() {
-                            });
-
-                            listView = mFragmentView.findViewById(R.id.menutablistview);
-                            menuTabAdapter = new MenuTabAdapter(listView.getContext(), ftrucklist1);
-                            listView.setAdapter(menuTabAdapter);
-                            listView.setOnItemClickListener(this);
-                            break;
-                        case 2:
-                            ftrucklist2 = new ObjectMapper().readValue(result, new TypeReference<List<FoodTruckVO>>() {
-                            });
-                            listView = mFragmentView.findViewById(R.id.menutablistview);
-                            menuTabAdapter = new MenuTabAdapter(listView.getContext(), ftrucklist2);
-                            listView.setAdapter(menuTabAdapter);
-                            listView.setOnItemClickListener(this);
-                            break;
-                        case 3:
-                            ftrucklist3 = new ObjectMapper().readValue(result, new TypeReference<List<FoodTruckVO>>() {
-                            });
-                            listView = mFragmentView.findViewById(R.id.menutablistview);
-                            menuTabAdapter = new MenuTabAdapter(listView.getContext(), ftrucklist3);
-                            listView.setAdapter(menuTabAdapter);
-                            listView.setOnItemClickListener(this);
-                            break;
-                        case 4:
-                            ftrucklist4 = new ObjectMapper().readValue(result, new TypeReference<List<FoodTruckVO>>() {
-                            });
-                            listView = mFragmentView.findViewById(R.id.menutablistview);
-                            menuTabAdapter = new MenuTabAdapter(listView.getContext(), ftrucklist4);
-                            listView.setAdapter(menuTabAdapter);
-                            listView.setOnItemClickListener(this);
-                            break;
-                        case 5:
-                            ftrucklist5 = new ObjectMapper().readValue(result, new TypeReference<List<FoodTruckVO>>() {
-                            });
-                            listView = mFragmentView.findViewById(R.id.menutablistview);
-                            menuTabAdapter = new MenuTabAdapter(listView.getContext(), ftrucklist5);
-                            listView.setAdapter(menuTabAdapter);
-                            listView.setOnItemClickListener(this);
-                            break;
-                        case 6:
-                            ftrucklist6 = new ObjectMapper().readValue(result, new TypeReference<List<FoodTruckVO>>() {
-                            });
-                            listView = mFragmentView.findViewById(R.id.menutablistview);
-                            menuTabAdapter = new MenuTabAdapter(listView.getContext(), ftrucklist6);
-                            listView.setAdapter(menuTabAdapter);
-                            listView.setOnItemClickListener(this);
-                            break;
-                        case 7:
-                            ftrucklist7 = new ObjectMapper().readValue(result, new TypeReference<List<FoodTruckVO>>() {
-                            });
-                            listView = mFragmentView.findViewById(R.id.menutablistview);
-                            menuTabAdapter = new MenuTabAdapter(listView.getContext(), ftrucklist7);
-                            listView.setAdapter(menuTabAdapter);
-                            listView.setOnItemClickListener(this);
-                            break;
-                        case 8:
-                            ftrucklist8 = new ObjectMapper().readValue(result, new TypeReference<List<FoodTruckVO>>() {
-                            });
-                            listView = mFragmentView.findViewById(R.id.menutablistview);
-                            menuTabAdapter = new MenuTabAdapter(listView.getContext(), ftrucklist8);
-                            listView.setAdapter(menuTabAdapter);
-                            listView.setOnItemClickListener(this);
-                            break;
-                        case 9:
-                            ftrucklist9 = new ObjectMapper().readValue(result, new TypeReference<List<FoodTruckVO>>() {
-                            });
-                            listView = mFragmentView.findViewById(R.id.menutablistview);
-                            menuTabAdapter = new MenuTabAdapter(listView.getContext(), ftrucklist9);
-                            listView.setAdapter(menuTabAdapter);
-                            listView.setOnItemClickListener(this);
-                            break;
-                        default:
-                            break;
-                    }
-
+                    listView = mFragmentView.findViewById(R.id.menutablistview);
+                    menuTabAdapter = new MenuTabAdapter(listView.getContext(), ftrucklist1);
+                    listView.setAdapter(menuTabAdapter);
+                    listView.setOnItemClickListener(this);
+                    
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 } catch (ExecutionException e) {

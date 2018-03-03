@@ -20,8 +20,6 @@
     </string-array>
 
 
-
-
     <string-array name="scspinner1_arr">
         <item>고객정보</item>
         <item>주문/결제</item>
@@ -61,4 +59,7 @@
     <string name="tab_text_3">리뷰</string>
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="title_activity_menu_detail">MenuDetailActivity</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

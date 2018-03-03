@@ -49,7 +49,7 @@ public class ServiceCenterActivity extends AppCompatActivity {
                         startActivity(intent);
                         break;
                     case 2:
-                        intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:(+82)15770000"));
+                        intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:15770000"));
                         startActivity(intent);
                         break;
                     default:
