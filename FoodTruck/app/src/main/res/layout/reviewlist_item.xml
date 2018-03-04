@@ -20,17 +20,18 @@
 
         <TextView
             android:id="@+id/rnametext"
-            android:layout_width="280dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="8"
+            android:layout_weight="6"
             android:text="prudctname"
-            android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
 
         <TextView
             android:id="@+id/rcontenttext"
-            android:layout_width="280dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:text="price" />
+            android:layout_weight="4"
+            android:text="price"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
     </LinearLayout>
 </LinearLayout>

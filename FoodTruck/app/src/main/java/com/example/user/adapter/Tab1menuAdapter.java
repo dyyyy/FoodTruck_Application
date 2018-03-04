@@ -3,6 +3,7 @@ package com.example.user.adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,12 +38,14 @@ public class Tab1menuAdapter extends ArrayAdapter<ProductVO> {
 
         ProductVO vo = list.get(position);
 
-        //ImageView imageView = view.findViewById(R.id.productimage);
-        TextView textView = view.findViewById(R.id.productnametext);
-        TextView textView1 = view.findViewById(R.id.productpricetext);
+        ImageView imageView = view.findViewById(R.id.productimage);
+        TextView prodname = view.findViewById(R.id.productnametext);
+        TextView prodprice = view.findViewById(R.id.prodPricetextView);
 
-        textView.setText(vo.getProdName());
-        //textView1.setText(vo.getProdPrice());
+
+        prodname.setText(vo.getProdName());
+        prodprice.setText(String.valueOf(vo.getProdPrice()));
+
 
         return view;
     }

@@ -23,7 +23,7 @@
             android:inputType="textEmailAddress"
             android:selectAllOnFocus="false"
             android:singleLine="false"
-            android:text="user@naver.com한글" />
+            android:text="user@naver.com" />
 
         <EditText
             android:id="@+id/pwInput"

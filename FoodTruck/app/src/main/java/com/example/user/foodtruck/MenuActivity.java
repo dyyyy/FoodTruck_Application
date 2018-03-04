@@ -36,10 +36,10 @@ import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 public class MenuActivity extends AppCompatActivity {
+
     int setPosition;
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,10 +70,9 @@ public class MenuActivity extends AppCompatActivity {
         }
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
+
         getMenuInflater().inflate(R.menu.menu_menu, menu);
         return true;
     }
@@ -94,6 +93,7 @@ public class MenuActivity extends AppCompatActivity {
         private static final String ARG_SECTION_NUMBER = "section_number";
 
         public PlaceholderFragment() {
+
         }
 
         public static PlaceholderFragment newInstance(int sectionNumber) {
@@ -108,18 +108,16 @@ public class MenuActivity extends AppCompatActivity {
 
         private View mFragmentView;
 
-
         @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             Log.d("argument", " : " + getArguments().get(ARG_SECTION_NUMBER));
 
             if (mFragmentView != null) {
 
                 return mFragmentView;
             } else {
-                //한번씩만 호출됨 그뒤로 호출안됨..
 
+                //한번씩만 호출됨 그뒤로 호출안됨..
                 mFragmentView = inflater.inflate(R.layout.menu_tab, container, false);
                 Map<String, Integer> map = new HashMap<>();
                 map.put("category", getArguments().getInt(ARG_SECTION_NUMBER));
@@ -128,11 +126,9 @@ public class MenuActivity extends AppCompatActivity {
                 RestTempleatAsyncTask restTempleatAsyncTask = new RestTempleatAsyncTask(addr, map);
 
                 try {
-
                     String result = restTempleatAsyncTask.execute().get();
                     List<FoodTruckVO> ftrucklist1 = new ObjectMapper().readValue(result, new TypeReference<List<FoodTruckVO>>() {
                     });
-
                     ListView listView = mFragmentView.findViewById(R.id.menutablistview);
                     MenuTabAdapter menuTabAdapter = new MenuTabAdapter(listView.getContext(), ftrucklist1);
                     listView.setAdapter(menuTabAdapter);
@@ -145,12 +141,8 @@ public class MenuActivity extends AppCompatActivity {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
-                //      button.setOnClickListener(this);
-
                 return mFragmentView;
             }
-
         }
 
         @Override

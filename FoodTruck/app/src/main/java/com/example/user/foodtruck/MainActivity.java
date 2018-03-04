@@ -1,8 +1,8 @@
 package com.example.user.foodtruck;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -12,22 +12,17 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.Layout;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.user.adapter.LoginPreference;
 import com.example.user.adapter.MenuAdapter;
-
-import java.security.acl.Group;
 
 
 public class MainActivity extends AppCompatActivity
@@ -42,13 +37,13 @@ public class MainActivity extends AppCompatActivity
 
     /*쉐어프리퍼런스로 로그인 기능*/
     /*앱이 종료되면 autoLogin이 아닐때 sharedpreference (로그인)정보 삭제*/
+    @SuppressLint("MissingPermission")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         backPressCloseHandler = new BackPressCloseHandler(this);
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setLogo(R.mipmap.ic_launcher_foreground);
 
@@ -126,7 +121,6 @@ public class MainActivity extends AppCompatActivity
                 Toast.makeText(this, "없는 버튼입니다.", Toast.LENGTH_SHORT).show();
                 break;
         }
-
     }
 
     /*onBackPressed Toast Message*/
@@ -256,4 +250,5 @@ public class MainActivity extends AppCompatActivity
             registerBtn.setOnClickListener(this);
         }
     }
+
 }

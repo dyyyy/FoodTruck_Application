@@ -1,6 +1,9 @@
 <resources>
-    <string name="app_name">푸드트럭</string>
 
+    <string name="app_name">푸드트럭</string>
+    <string name="hello">Hello World, NMapViewer!</string>
+    
+    <string name="str_done">완료</string>
     <string name="nav_notice">공지사항</string>
     <string name="nav_event">이벤트</string>
     <string name="nav_board_detail">게시글</string>

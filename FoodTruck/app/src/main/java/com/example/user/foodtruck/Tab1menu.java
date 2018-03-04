@@ -52,11 +52,12 @@ public class Tab1menu extends Fragment implements AdapterView.OnItemClickListene
 
 
             String result1 = getArguments().getString("result1");
+            Log.d("result1", " : " + result1);
             if (!result1.equals("[]")) {
                 try {
                     List<ProductVO> pvolist = new ObjectMapper().readValue(result1, new TypeReference<List<ProductVO>>() {
                     });
-                    Log.d("pvolist", " : " + pvolist.toString());
+                    Log.d("pvolist", " : " + pvolist.get(0).getProdPrice());
 
                     ListView listView = mFragmentView.findViewById(R.id.menulistview);
                     Tab1menuAdapter tab1menuAdapter = new Tab1menuAdapter(listView.getContext(), pvolist);
