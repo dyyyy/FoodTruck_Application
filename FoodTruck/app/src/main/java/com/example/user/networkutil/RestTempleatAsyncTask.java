@@ -52,7 +52,7 @@ public class RestTempleatAsyncTask extends AsyncTask<String, Integer, String> {
     @Override
     protected void onPreExecute() {
 
-        baseUri = "http://192.168.0.9:8090/android" + uri;
+        baseUri = "http://192.168.0.19:8090/android" + uri;
         restTemplate = new RestTemplate();
 
         httpHeaders = new HttpHeaders();

@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.user.vo.FoodTruckVO;
 import com.nhn.android.maps.NMapContext;
@@ -45,6 +46,7 @@ public class Tab2info extends Fragment {
     }
 
     private View mFragmentView;
+    TextView content1, content2, content3;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -59,8 +61,15 @@ public class Tab2info extends Fragment {
             mFragmentView = inflater.inflate(R.layout.fragment_tab2info, container, false);
 
             int secnum = getArguments().getInt(ARG_SECTION_NUMBER);
-            Log.d("secnum", " : " + secnum);
+
             fvo = (FoodTruckVO) getArguments().getSerializable("fvo");
+
+            content1 = mFragmentView.findViewById(R.id.content1);
+            content1.setText(fvo.getFtruckIntro());
+            content2 = mFragmentView.findViewById(R.id.content2);
+            content2.setText(fvo.getFtruckAddr());
+            content3 = mFragmentView.findViewById(R.id.content3);
+            content3.setText(fvo.getFtruckName());
 
             return mFragmentView;
         }
@@ -86,19 +95,13 @@ public class Tab2info extends Fragment {
         // create overlay manager
         mOverlayManager = new NMapOverlayManager(getContext(), mapView, mMapViewerResourceProvider);
 
-        NMapLocationManager nMapLocationManager = new NMapLocationManager(getContext());
-        nMapLocationManager.enableMyLocation(false);
-
-        Log.d("mylocation", "" + nMapLocationManager.getMyLocation());
-
-
         int markerId = NMapPOIflagType.PIN;
 
         NMapPOIdata nMapPOIdata = new NMapPOIdata(2, mMapViewerResourceProvider);
 
         nMapPOIdata.beginPOIdata(2);
         nMapPOIdata.addPOIitem(Double.parseDouble(fvo.getLongitude()), Double.parseDouble(fvo.getLatitude()), fvo.getFtruckName(), markerId, 0);
-
+            Log.d("fvo.getlognitud"," : "+fvo.getLongitude()+" lattitude"+fvo.getLatitude());
         nMapPOIdata.endPOIdata();
 
         NMapPOIdataOverlay poiDataOverlay = mOverlayManager.createPOIdataOverlay(nMapPOIdata, null);
